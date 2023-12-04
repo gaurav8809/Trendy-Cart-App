@@ -7,7 +7,7 @@ const Register = () => {
     return (
         <>
             <Header />
-            <Banner title="Register" />
+            {/*<Banner title="Register" />*/}
             <RegisterArea />
             <Footer />
         </>

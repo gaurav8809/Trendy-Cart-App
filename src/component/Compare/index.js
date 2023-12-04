@@ -1,11 +1,24 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import { RatingStar } from "rating-star";
 import img from '../../assets/img/common/empty-cart.png'
 import { useDispatch, useSelector } from "react-redux";
+import NO_PRODUCT from "../../assets/img/common/no-product.png";
 
 const Compare = () => {
-    let products = useSelector((state) => state.products.compare);
+    const compareIDs = useSelector((state) => state.products.compareProducts);
+    const productsAvailable = useSelector((state) => state.products.products);
+    const user = useSelector((state) => state.user.user);
+
+    const history = useHistory()
+
+    let products = [];
+
+    if(compareIDs.length)
+    {
+        products = productsAvailable.filter(item => compareIDs.includes(item.product_ID));
+    }
+
     let dispatch = useDispatch();
     // Add to cart
     const addToCart = async (id) => {
@@ -14,8 +27,13 @@ const Compare = () => {
     }
     // del comp
     const delCompare = async (id) => {
-        dispatch({ type: "products/delCompare", payload: { id } })
+        dispatch({ type: "products/removeFromCompare", payload: id })
     }
+
+    const onClickAddToCart = (product_ID) => {
+        !user && history.push('/login');
+    }
+
     return (
         <>{products.length ?
             <section id="compare_area" className="ptb-100">
@@ -32,12 +50,12 @@ const Compare = () => {
                                                 {
                                                     products.map((item, index) => (
                                                         <td className="product-image-title" key={index}>
-                                                            <Link to={`/product-details-one/${item.id}`} className="image">
+                                                            <Link to={`/product-details-one/${item.product_ID}`} className="image">
                                                                 {
-                                                                    products.length === 3 ?
-                                                                        <img src={item.img} alt="Compare_Product" style={{ height: '43vh' }} />
-                                                                        :
-                                                                        <img src={item.img} alt="Compare_Product" style={{ height: '70vh' }} />
+                                                                    // products.length === 3 ?
+                                                                    //     <img src={item.portfolioImage} alt="Compare_Product" style={{ height: 60, width: 60 }} />
+                                                                    //     :
+                                                                        <img src={item.portfolioImage} alt="Compare_Product" style={{ height: '40vh', width: '40vh' }} />
                                                                 }
                                                             </Link>
                                                             <Link to="/shop-left-bar" className="category">{item.category}</Link>
@@ -71,28 +89,20 @@ const Compare = () => {
                                                 <td className="first-column">Color</td>
                                                 {
                                                     products.map((item, index) => (
-                                                        <td className="pro-color" key={index}>{['Black', 'Red', 'Blue'][index]}</td>
+                                                        <td className="pro-color" key={index}>{item.color}</td>
                                                     ))
                                                 }
 
                                             </tr>
-                                            <tr>
-                                                <td className="first-column">Stock</td>
-                                                {
-                                                    products.map((item, index) => (
-                                                        <td className="pro-stock" key={index}>{['In Stock', 'Coming Soon', 'Sold Out'][index]}</td>
-                                                    ))
-                                                }
+                                            {/*<tr>*/}
+                                            {/*    <td className="first-column">Stock</td>*/}
+                                            {/*    {*/}
+                                            {/*        products.map((item, index) => (*/}
+                                            {/*            <td className="pro-stock" key={index}>{['In Stock', 'Coming Soon', 'Sold Out'][index]}</td>*/}
+                                            {/*        ))*/}
+                                            {/*    }*/}
 
-                                            </tr>
-                                            <tr>
-                                                <td className="first-column">Add to cart</td>
-                                                {
-                                                    products.map((item, index) => (
-                                                        <td className="pro-addtocart" key={index}><a href="#!" onClick={() => addToCart(item.id)} className="theme-btn-one btn-black-overlay btn_sm"><span>ADD TO CART</span></a></td>
-                                                    ))
-                                                }
-                                            </tr>
+                                            {/*</tr>*/}
                                             <tr>
                                                 <td className="first-column">Rating</td>
                                                 {
@@ -101,9 +111,18 @@ const Compare = () => {
                                                             <RatingStar
                                                                 maxScore={5}
                                                                 id="rating-star-compare"
-                                                                rating={item.rating.rate}
+                                                                rating={4}
                                                             />
                                                         </td>
+                                                    ))
+                                                }
+                                            </tr>
+
+                                            <tr>
+                                                <td className="first-column">Add to cart</td>
+                                                {
+                                                    products.map((item, index) => (
+                                                        <td className="pro-addtocart" key={index}><a href="#!" onClick={() => onClickAddToCart(item.product_ID)} className="theme-btn-one btn-black-overlay btn_sm"><span>ADD TO CART</span></a></td>
                                                     ))
                                                 }
                                             </tr>
@@ -111,10 +130,9 @@ const Compare = () => {
                                                 <td className="first-column">Delete</td>
                                                 {
                                                     products.map((item, index) => (
-                                                        <td className="pro-remove" key={index}><button onClick={() => delCompare(item.id)}><i className="fa fa-trash"></i></button></td>
+                                                        <td className="pro-remove" key={index}><button onClick={() => delCompare(item.product_ID)}><i className="fa fa-trash"></i></button></td>
                                                     ))
                                                 }
-
                                             </tr>
                                         </tbody>
                                     </table>
@@ -130,7 +148,7 @@ const Compare = () => {
                     <div className="row">
                         <div className="col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-12 col-12">
                             <div className="empaty_cart_area">
-                                <img src={img} alt="img" />
+                                <img src={NO_PRODUCT} alt="img" style={{height: 200, width: 300}} />
                                 <h2>PRODUCT NOT FOUND</h2>
                                 <h3>Sorry Mate... No Item Found Inside Your Compare List!</h3>
                                 <Link to="/shop" className="btn btn-black-overlay btn_sm">Continue Shopping</Link>

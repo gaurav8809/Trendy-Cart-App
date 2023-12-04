@@ -1,48 +1,35 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import Swal from 'sweetalert2';
 import { useHistory } from "react-router-dom"
+import {authenticate, getCartData} from "../../redux/slices/userSlice";
 
 const LoginArea = () => {
     let dispatch = useDispatch();
     const history = useHistory()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-    let status = useSelector((state) => state.user.status);
     let user = useSelector((state) => state.user.user);
 
-    // Login
-    const login = () => {
-        if(status){
-            Swal.fire({
-                icon: 'question',
-                title: 'Mr. '+user.name,
-                html:
-                    'You are already loged in <br />' +
-                    'You can go to <b>' +
-                    'Dashboard</b> ' +
-                    'or our <b>Shop</b> page',
-            }).then((result) => {
-                if(result.isConfirmed) {
-                  history.push('/my-account')
-                } else {
-                  // not clicked
-                }
-              });
-        }else{
-            dispatch({ type: "user/login" })
-            let name = user.name || 'Customer'
-            console.log(typeof(user.name));
-            Swal.fire({
-                icon: 'success',
-                title: 'Login Sucessfull',
-                text: 'Welcome '+ name
-            })
-            history.push("/my-account");
-        }
-        
+    useEffect(() => {
+        user && history.push('/');
+    }, []);
 
-    }
+    const onClickLogin = async () => {
+        let {payload: {status, message, response}} = await dispatch(authenticate({email, password}));
+        if(status === 204 || status === 404) {
+            Swal.fire({
+                icon: 'error',
+                title: message,
+                html: 'Please try again!!',
+            });
+        } else {
+            await dispatch(getCartData(response.user_ID));
+            history.push("/shop");
+        }
+    };
 
     return (
         <>
@@ -52,14 +39,17 @@ const LoginArea = () => {
                         <div className="col-lg-6 offset-lg-3 col-md-12 col-sm-12 col-12">
                             <div className="account_form">
                                 <h3>Login</h3>
-                                <form onSubmit={(e)=>{e.preventDefault();login()}}>
+                                <form onSubmit={(e)=>{e.preventDefault();onClickLogin()}}>
                                     <div className="default-form-box">
-                                        <label>Username or email<span className="text-danger">*</span></label>
-                                        <input type="text" className="form-control" required defaultValue="jhondoe@gmail.com"/>
+                                        <label>Email<span className="text-danger">*</span></label>
+                                        <input value={email} onChange={event => setEmail(event.target.value)}
+                                               type="email" className="form-control" required
+                                        />
                                     </div>
                                     <div className="default-form-box">
                                         <label>Passwords<span className="text-danger">*</span></label>
-                                        <input type="password" className="form-control" required defaultValue="jhondoe123" minLength="8"/>
+                                        <input value={password} onChange={event => setPassword(event.target.value)}
+                                               type="password" className="form-control" required minLength="8"/>
                                     </div>
                                     <div className="login_submit">
                                         <button className="theme-btn-one btn-black-overlay btn_md" type="submit">login</button>

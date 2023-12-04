@@ -17,12 +17,12 @@ const Fashion = () => {
             <Header />
             <Banner />
             <BannerBottom />
-            <HotProduct />
-            <OfferTime />
-            <TodayDeal />
-            <Trending />
-            <Blog />
-            <InstgramSlider />
+            {/*<HotProduct />*/}
+            {/*<OfferTime />*/}
+            {/*<TodayDeal />*/}
+            {/*<Trending />*/}
+            {/*<Blog />*/}
+            {/*<InstgramSlider />*/}
             <Footer />
         </>
     )

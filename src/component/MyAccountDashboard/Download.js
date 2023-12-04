@@ -1,5 +1,5 @@
 import React from 'react'
-import pdf from '../../app/data/andshop-invoice.pdf'
+import pdf from '../../redux/data/andshop-invoice.pdf'
 const Download = () => {
     return (
         <>

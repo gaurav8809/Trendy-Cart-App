@@ -11,7 +11,7 @@ const ShopGrid = () => {
             <Header />
             <Banner title="Shop" />
             <Shop />
-            <InstgramSlider />
+            {/*<InstgramSlider />*/}
             <Footer />
         </>
     )

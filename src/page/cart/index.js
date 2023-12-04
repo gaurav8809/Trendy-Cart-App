@@ -8,7 +8,7 @@ const Cart = () => {
     return (
         <>
             <Header/>
-            <Banner title="Cart" />
+            {/*<Banner title="Cart" />*/}
             <CartArea/>
             <Footer/>
 

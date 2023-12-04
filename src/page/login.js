@@ -7,7 +7,7 @@ const Login = () => {
     return (
         <>
             <Header />
-            <Banner title="Login" />
+            {/*<Banner title="Login" />*/}
             <LoginArea />
             <Footer />
         </>

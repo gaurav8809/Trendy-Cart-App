@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { BrowserRouter as Router, Switch, Route, BrowserRouter } from 'react-router-dom';
 import loadable from './component/Common/loader/loadable';
 import Loading from './component/Common/loader';
 import pMinDelay from 'p-min-delay';
+import {useDispatch, useSelector} from "react-redux";
+// import {getProducts} from "./redux/actions/productActions";
+import {getProducts} from "./redux/slices/productSlice";
+import {BASE_URL, GET_PRODUCTS} from "./redux/apiServices/apiConstants";
 
 // All Page Lazy Import
 const Furniture = loadable(() => pMinDelay(import('./page/furniture'), 250), { fallback: <Loading /> });
@@ -66,6 +70,27 @@ const ScrollToTop = loadable(() => pMinDelay(import('./component/Common/ScrollTo
 const Fashion = loadable(() => pMinDelay(import('./page/'), 250), { fallback: <Loading /> });
 
 const App = () => {
+
+  let dispatch = useDispatch();
+
+  useEffect(() => {
+    getAllRequiredData();
+  }, []);
+
+  const getAllRequiredData = async () => {
+    // await fetch(BASE_URL + GET_PRODUCTS)
+    //     .then(() => {
+    //       debugger
+    //     })
+    //     .catch(er => {
+    //       debugger
+    //     })
+
+    await dispatch(getProducts());
+
+  };
+
+
   return (
     <>
       <BrowserRouter>
@@ -133,7 +158,6 @@ const App = () => {
           </Switch>
         </Router>
       </BrowserRouter>
-
     </>
   );
 }
