@@ -31,7 +31,7 @@ const ContactArea = () => {
                                     <li className="address_location">
                                     <div className="contact_widget ">
                                     <i className="fa fa-map-marker"></i>
-                                        <p>32, Choto Mirzapur, Ahsan Ahmed Road <br/> Khulna 9100, Bangladesh</p>
+                                        <p>11760, 13 Mile Road <br/> Warren, Michigan, USA</p>
                                     </div>
                                     </li>
                                     <li className="address_location">
@@ -47,7 +47,7 @@ const ContactArea = () => {
                                     <li className="address_location">
                                         <div className="contact_widget">
                                             <i className="fa fa-envelope"></i>
-                                            <Link to="/">demo@gmail.com</Link>
+                                            <Link to="/">gauravrana@gmail.com</Link>
                                         </div>
                                         <div className="contact_widget">
                                         <i className="fa fa-globe"></i>

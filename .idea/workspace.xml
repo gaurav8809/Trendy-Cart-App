@@ -5,57 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb230ad2-eb94-4650-9b4d-fb8a308f4a8c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/img/common/no-product.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/apiServices/apiConstants.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/slices/constants.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/slices/productSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/slices/products.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/slices/userSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/store/appState.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/store/productState.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/store/userState.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/handlers/appHandler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/data/andshop-invoice.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/data/andshop-invoice.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/data/productsData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/data/productsData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/features/products.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/apiServices/apiCall.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/i18n/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/i18n/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/i18n/locales/bangla.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/i18n/locales/bangla.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/i18n/locales/english.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/i18n/locales/english.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/slices/settings.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/settings.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/slices/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/img/common/common_bg.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/img/common/common_bg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/About/AboutTop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/About/AboutTop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/About/Team.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/About/Team.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Cart/TotalCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Cart/TotalCart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Cart/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Cart/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Checkout/YourOrders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Checkout/YourOrders.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Common/Footer/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/Footer/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Common/Header/TopHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/Header/TopHeader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Common/Header/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/Header/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Common/Modal/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/Modal/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Common/Product/ProductCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/Product/ProductCard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Common/ProductDetails/ProductDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/ProductDetails/ProductDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Common/ProductDetails/ProductInfo.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/ProductDetails/ProductInfo.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Common/ProductDetails/RelatedProduct.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/ProductDetails/RelatedProduct.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Compare/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Compare/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Fashion/Banner/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Fashion/Banner/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Fashion/BannerBottom/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Fashion/BannerBottom/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Login/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Login/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/MyAccountDashboard/Download.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/MyAccountDashboard/Download.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Register/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Register/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Shop/Shop.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Shop/Shop.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/about.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/about.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/cart/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/cart/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/product/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/product/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page/shop/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/shop/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/ContactOne/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/ContactOne/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/page/checkout/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/checkout/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/apiServices/apiConstants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/apiServices/apiConstants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/userSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/userSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +50,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "dev",
     "last_opened_file_path": "C:/GauravRana/React/andshop/src/redux/store",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.standard": "true",
@@ -154,7 +116,7 @@
       <workItem from="1700779985842" duration="7777000" />
       <workItem from="1701097852074" duration="23420000" />
       <workItem from="1701294464963" duration="4975000" />
-      <workItem from="1701578661550" duration="46718000" />
+      <workItem from="1701578661550" duration="62726000" />
     </task>
     <servers />
   </component>

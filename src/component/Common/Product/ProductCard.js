@@ -8,6 +8,7 @@ import MyVerticallyCenteredModal from '../../Common/Modal';
 import {setProductToCompare} from "../../../redux/slices/productSlice";
 import {addProductIntoCart, register} from "../../../redux/slices/userSlice";
 import Swal from "sweetalert2";
+import {InCart} from "../../../handlers/appHandler";
 
 const ProductCard = (props) => {
 
@@ -19,11 +20,8 @@ const ProductCard = (props) => {
         description,
     } = props.data;
     const history = useHistory();
-    let user = useSelector((state) => state.user.user);
-    let cart = useSelector((state) => state.user.cart);
-    let isInCart = cart?.products.find(item => item.product_ID === product_ID);
-
-    console.log('cart:', cart)
+    const user = useSelector((state) => state.user.user);
+    const cart = useSelector((state) => state.user.cart);
 
     let dispatch = useDispatch();
     // Add to cart
@@ -40,13 +38,27 @@ const ProductCard = (props) => {
     }
     const [modalShow, setModalShow] = useState(false);
 
-    const onClickWishList = () => {
+    const onClickWishlist = () => {
         !user && history.push('/login')
     }
 
-    const onClickCompare = () => {
-        dispatch({ type: "products/setProductToCompare", payload: product_ID})
-        history.push('/compare');
+    const onClickCompare = async () => {
+        if(user) {
+            let payload = {
+                user,
+                product: props.data
+            }
+            let {payload: {status, message}} = await dispatch(addProductIntoCart(payload));
+            if(status === 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: message,
+                    // html: '',
+                });
+            }
+        } else {
+            history.push("/login");
+        }
     }
 
     const onClickAddToCart = async () => {
@@ -82,15 +94,23 @@ const ProductCard = (props) => {
                         <img className="hover-image" src={portfolioImage}
                             alt="Product" />
                     </Link>
-                    {/*<span className="badges">*/}
-                    {/*    <span className={(['hot','new','sale'][Math.round(Math.random()*2)])}>{props.data.labels}</span>*/}
-                    {/*</span>*/}
+                    {
+                        InCart(cart, product_ID) &&
+                        <span className="badges">
+                            <span className={(['hot','new','sale'][Math.round(Math.random()*2)])}>{'In cart'}</span>
+                        </span>
+                    }
+
                     <div className="actions">
-                        <a className="action wishlist" title="Wishlist" onClick={onClickWishList}><AiOutlineHeart /></a>
+                        <a className="action wishlist" title="Wishlist" onClick={onClickWishlist}><AiOutlineHeart /></a>
                         <a className="action quickview" title="Quick view" onClick={() => setModalShow(true)}><AiOutlineExpand /></a>
                         <a className="action compare" title="Compare" onClick={onClickCompare}><FaExchangeAlt /></a>
                     </div>
-                    <button type="button" className="add-to-cart offcanvas-toggle" onClick={onClickAddToCart}> { isInCart ? 'In cart' : 'Add to cart' }</button>
+                    {
+                        !InCart(cart, product_ID) &&
+                        <button type="button" className="add-to-cart offcanvas-toggle" onClick={onClickAddToCart}> { InCart(cart, product_ID) ? 'In cart' : 'Add to cart' }</button>
+
+                    }
                 </div>
                 <div className="content">
                     <h5 className="title">

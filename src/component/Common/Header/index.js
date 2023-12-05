@@ -567,12 +567,12 @@ const Header = () => {
                         {cartProducts.map((data, index) => (
                             <li className="offcanvas-wishlist-item-single" key={index}>
                                 <div className="offcanvas-wishlist-item-block">
-                                    <Link to={`/product-details-one/${data.id}`} className="offcanvas-wishlist-item-image-link" >
+                                    <Link to={`/product-details-one/${data.product_ID}`} className="offcanvas-wishlist-item-image-link" >
                                         <img src={data.portfolioImage} alt="img"
                                             className="offcanvas-wishlist-image" />
                                     </Link>
                                     <div className="offcanvas-wishlist-item-content">
-                                        <Link to={`/product-details-one/${data.id}`} className="offcanvas-wishlist-item-link">{data.name.substring(0, 25)}{data.name.length < 25 ? '' : '...'}</Link>
+                                        <Link to={`/product-details-one/${data.product_ID}`} className="offcanvas-wishlist-item-link">{data.name.substring(0, 25)}{data.name.length < 25 ? '' : '...'}</Link>
                                         <div className="offcanvas-wishlist-item-details">
                                             <span className="offcanvas-wishlist-item-details-quantity">{data.qty || 1} x
                                             </span>

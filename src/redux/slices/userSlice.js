@@ -3,11 +3,11 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import Swal from "sweetalert2";
 // import {getProducts} from "../actions/productActions";
 import {
-    ADD_PRODUCT_INTO_CART,
+    ADD_PRODUCT_INTO_CART, ADD_PRODUCT_INTO_WISHLIST,
     AUTHENTICATE,
-    BASE_URL, EMPTY_CART, GET_CART_DATA,
+    BASE_URL, EMPTY_CART, EMPTY_WISHLIST, GET_CART_DATA, GET_WISHLIST_DATA,
     REGISTER,
-    REMOVE_PRODUCT_FROM_CART
+    REMOVE_PRODUCT_FROM_CART, REMOVE_PRODUCT_FROM_WISHLIST
 } from "../apiServices/apiConstants";
 import {API} from "../apiServices/apiCall";
 import userState from "../store/userState";
@@ -42,6 +42,25 @@ export const removeProductFromCart = createAsyncThunk('user/removeProductFromCar
 
 export const emptyCart = createAsyncThunk('user/emptyCart', async (data) => {
     let response = await API(BASE_URL + EMPTY_CART, 'DELETE', data);
+});
+
+export const getWishlistData = createAsyncThunk('user/getWishlistData', async (data) => {
+    let response = await API(BASE_URL + GET_WISHLIST_DATA + `/${data}`);
+    return response;
+});
+
+export const addProductIntoWishlist = createAsyncThunk('user/addProductIntoWishlist', async (data) => {
+    let response = await API(BASE_URL + ADD_PRODUCT_INTO_WISHLIST, 'POST', data);
+    return response;
+});
+
+export const removeProductFromWishlist = createAsyncThunk('user/removeProductFromWishlist', async (data) => {
+    let response = await API(BASE_URL + REMOVE_PRODUCT_FROM_WISHLIST, 'POST', data);
+    return response;
+});
+
+export const emptyWishlist = createAsyncThunk('user/emptyWishlist', async (data) => {
+    let response = await API(BASE_URL + EMPTY_WISHLIST, 'DELETE', data);
     return response;
 });
 
@@ -70,6 +89,8 @@ const userSlice = createSlice({
             .addCase(register.fulfilled, (state, action) => {
                 state.user = action.payload?.response || null;
             })
+
+            // Cart
             .addCase(getCartData.fulfilled, (state, action) => {
                 state.cart = action.payload?.response;
             })
@@ -77,11 +98,23 @@ const userSlice = createSlice({
                 state.cart = action.payload?.response || null;
             })
             .addCase(removeProductFromCart.fulfilled, (state, action) => {
-                debugger
                 state.cart = action.payload.response;
             })
             .addCase(emptyCart.fulfilled, (state, action) => {
-                debugger
+                state.cart = null;
+            })
+
+            // Wishlist
+            .addCase(getWishlistData.fulfilled, (state, action) => {
+                state.cart = action.payload?.response;
+            })
+            .addCase(addProductIntoWishlist.fulfilled, (state, action) => {
+                state.cart = action.payload?.response || null;
+            })
+            .addCase(removeProductFromWishlist.fulfilled, (state, action) => {
+                state.cart = action.payload.response;
+            })
+            .addCase(emptyWishlist.fulfilled, (state, action) => {
                 state.cart = null;
             })
     }

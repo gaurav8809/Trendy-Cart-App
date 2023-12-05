@@ -7,7 +7,7 @@ const CheckoutOne = () => {
     return (
         <>
             <Header />
-            <Banner title="Checkout" />
+            {/*<Banner title="Checkout" />*/}
             <Checkout />
             <Footer />
         </>

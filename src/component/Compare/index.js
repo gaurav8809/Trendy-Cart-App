@@ -4,11 +4,15 @@ import { RatingStar } from "rating-star";
 import img from '../../assets/img/common/empty-cart.png'
 import { useDispatch, useSelector } from "react-redux";
 import NO_PRODUCT from "../../assets/img/common/no-product.png";
+import {addProductIntoCart} from "../../redux/slices/userSlice";
+import Swal from "sweetalert2";
+import {InCart} from "../../handlers/appHandler";
 
 const Compare = () => {
     const compareIDs = useSelector((state) => state.products.compareProducts);
     const productsAvailable = useSelector((state) => state.products.products);
     const user = useSelector((state) => state.user.user);
+    const cart = useSelector((state) => state.user.cart);
 
     const history = useHistory()
 
@@ -30,8 +34,25 @@ const Compare = () => {
         dispatch({ type: "products/removeFromCompare", payload: id })
     }
 
-    const onClickAddToCart = (product_ID) => {
-        !user && history.push('/login');
+    const onClickAddToCart = async (item) => {
+        if(user) {
+            let payload = {
+                qty: 1,
+                size: 'S',
+                user,
+                product: item
+            }
+            let {payload: {status, message}} = await dispatch(addProductIntoCart(payload));
+            if(status === 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: message,
+                    // html: '',
+                });
+            }
+        } else {
+            history.push("/login");
+        }
     }
 
     return (
@@ -70,7 +91,7 @@ const Compare = () => {
                                                 {
                                                     products.map((item, index) => (
                                                         <td className="pro-desc" key={index}>
-                                                            <p>{item.description}</p>
+                                                            <p>{item.description.substring(0, 50)}...</p>
                                                         </td>
                                                     ))
                                                 }
@@ -121,9 +142,14 @@ const Compare = () => {
                                             <tr>
                                                 <td className="first-column">Add to cart</td>
                                                 {
-                                                    products.map((item, index) => (
-                                                        <td className="pro-addtocart" key={index}><a href="#!" onClick={() => onClickAddToCart(item.product_ID)} className="theme-btn-one btn-black-overlay btn_sm"><span>ADD TO CART</span></a></td>
-                                                    ))
+                                                    products.map((item, index) => {
+                                                        return (
+                                                            InCart(cart, item.product_ID) ?
+                                                                <td className="pro-addtocart" key={index}><span>In cart</span></td>
+                                                                :
+                                                                <td className="pro-addtocart" key={index}><a onClick={() => onClickAddToCart(item)} className="theme-btn-one btn-black-overlay btn_sm"><span>ADD TO CART</span></a></td>
+                                                        )}
+                                                    )
                                                 }
                                             </tr>
                                             <tr>

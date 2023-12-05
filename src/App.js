@@ -78,16 +78,7 @@ const App = () => {
   }, []);
 
   const getAllRequiredData = async () => {
-    // await fetch(BASE_URL + GET_PRODUCTS)
-    //     .then(() => {
-    //       debugger
-    //     })
-    //     .catch(er => {
-    //       debugger
-    //     })
-
     await dispatch(getProducts());
-
   };
 
 

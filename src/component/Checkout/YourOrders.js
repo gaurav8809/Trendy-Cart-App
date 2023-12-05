@@ -1,6 +1,30 @@
 import React from 'react'
+import {useHistory} from "react-router-dom";
+import {useSelector} from "react-redux";
+import _ from 'lodash';
 
 const YourOrders = () => {
+    const history = useHistory();
+    const user = useSelector((state) => state.user.user);
+    const cart = useSelector((state) => state.user.cart);
+    const productsAvailable = useSelector((state) => state.products.products);
+    let tempCart = _.omit(cart, ['products']);
+    tempCart['products'] = [];
+
+    if(cart.products.length)
+    {
+        cart.products.filter(item => {
+            productsAvailable.map(item2 => {
+                if(item.product_ID === item2.product_ID) {
+                    tempCart.products.push({
+                        ...item2,
+                        ...item,
+                    });
+                }
+            })
+        });
+    }
+
     return (
         <>
             <div className="order_review  box-shadow bg-white">
@@ -16,34 +40,30 @@ const YourOrders = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Blue Dress For Woman <span className="product-qty">x 2</span>
-                                </td>
-                                <td>$90.00</td>
-                            </tr>
-                            <tr>
-                                <td>Lether Gray Tuxedo <span className="product-qty">x 1</span>
-                                </td>
-                                <td>$55.00</td>
-                            </tr>
-                            <tr>
-                                <td>Woman Full Sliv Dresss <span className="product-qty">x 3</span>
-                                </td>
-                                <td>$204.00</td>
-                            </tr>
+                            {
+                                tempCart.products?.map(item => {
+                                    return(
+                                        <tr>
+                                            <td>{item.name} <span className="product-qty">x {item.qty}</span>
+                                            </td>
+                                            <td>${item.price}</td>
+                                        </tr>
+                                    );
+                                })
+                            }
                         </tbody>
                         <tfoot>
                             <tr>
                                 <th>SubTotal</th>
-                                <td className="product-subtotal">$349.00</td>
+                                <td className="product-subtotal">${cart.subtotal}</td>
                             </tr>
                             <tr>
-                                <th>Shipping</th>
-                                <td>Free Shipping</td>
+                                <th>Sales Tax</th>
+                                <td>${parseFloat(cart.salesTax).toFixed(2)}</td>
                             </tr>
                             <tr>
                                 <th>Total</th>
-                                <td className="product-subtotal">$349.00</td>
+                                <td className="product-subtotal">${parseFloat(cart.total).toFixed(2)}</td>
                             </tr>
                         </tfoot>
                     </table>

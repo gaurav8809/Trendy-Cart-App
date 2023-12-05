@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import logo from '../../../assets/img/logo.png'
 import payment from '../../../assets/img/common/payment.png'
 import { Link } from 'react-router-dom'
-import Cookie from '../Cookie'
-import NewsletterModal from '../NewsletterModal'
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux";
 import Swal from 'sweetalert2'
@@ -20,17 +18,17 @@ const FooterData = [
             { linkTitle: "Compare", link: "/compare" }
         ]
     },
-    {
-        title: "SHOP",
-        links: [
-            { linkTitle: "Cart View One", link: "/cart" },
-            { linkTitle: "Cart View Two", link: "/cartTwo" },
-            { linkTitle: "Empty Cart", link: "/empty-cart" },
-            { linkTitle: "Checkout View One", link: "/checkout-one" },
-            { linkTitle: "Checkout View Two", link: "/checkout-two" },
-            { linkTitle: "Wishlist", link: "/wishlist" }
-        ]
-    }
+    // {
+    //     title: "SHOP",
+    //     links: [
+    //         { linkTitle: "Cart View One", link: "/cart" },
+    //         { linkTitle: "Cart View Two", link: "/cartTwo" },
+    //         { linkTitle: "Empty Cart", link: "/empty-cart" },
+    //         { linkTitle: "Checkout View One", link: "/checkout-one" },
+    //         { linkTitle: "Checkout View Two", link: "/checkout-two" },
+    //         { linkTitle: "Wishlist", link: "/wishlist" }
+    //     ]
+    // }
 ]
 
 const Footer = () => {
