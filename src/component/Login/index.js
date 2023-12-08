@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import Swal from 'sweetalert2';
 import { useHistory } from "react-router-dom"
-import {authenticate, getCartData} from "../../redux/slices/userSlice";
+import {authenticate, getCartData, getWishlistData} from "../../redux/slices/userSlice";
 
 const LoginArea = () => {
     let dispatch = useDispatch();
@@ -27,6 +27,7 @@ const LoginArea = () => {
             });
         } else {
             await dispatch(getCartData(response.user_ID));
+            await dispatch(getWishlistData(response.user_ID));
             history.push("/shop");
         }
     };

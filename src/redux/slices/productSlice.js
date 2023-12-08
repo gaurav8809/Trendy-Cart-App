@@ -27,7 +27,6 @@ const productsSlice = createSlice({
         },
         setProductToCompare: (state, action) => {
             let stateValue = current(state);
-            debugger
             if(stateValue.compareProducts.length)
             {
                 if(!stateValue.compareProducts.includes(action.payload))

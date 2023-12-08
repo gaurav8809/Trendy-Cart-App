@@ -6,9 +6,9 @@ import {Link, useHistory, withRouter} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import MyVerticallyCenteredModal from '../../Common/Modal';
 import {setProductToCompare} from "../../../redux/slices/productSlice";
-import {addProductIntoCart, register} from "../../../redux/slices/userSlice";
+import {addProductIntoCart, addProductIntoWishlist, register} from "../../../redux/slices/userSlice";
 import Swal from "sweetalert2";
-import {InCart} from "../../../handlers/appHandler";
+import {InCart, InWishlist} from "../../../handlers/appHandler";
 
 const ProductCard = (props) => {
 
@@ -17,48 +17,44 @@ const ProductCard = (props) => {
         price,
         name,
         portfolioImage,
-        description,
     } = props.data;
     const history = useHistory();
     const user = useSelector((state) => state.user.user);
     const cart = useSelector((state) => state.user.cart);
+    const wishlist = useSelector((state) => state.user.wishlist);
 
     let dispatch = useDispatch();
-    // Add to cart
-    const addToCart = async (id) => {
-        dispatch({ type: "products/addToCart", payload: { id } })
-    }
-    // Add to Favorite
-    const addToFav = async (id) => {
-        dispatch({ type: "products/addToFav", payload: { id } })
-    }
-    // Add to Compare
-    const addToComp = async (id) => {
-        dispatch({ type: "products/addToComp", payload: { id } })
-    }
     const [modalShow, setModalShow] = useState(false);
 
-    const onClickWishlist = () => {
-        !user && history.push('/login')
-    }
-
-    const onClickCompare = async () => {
+    const onClickWishlist = async () => {
+        if(InWishlist(wishlist, product_ID)) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Already in wishlist',
+                html: 'Go to wishlist to add it in cart'
+            });
+            return;
+        }
         if(user) {
             let payload = {
                 user,
                 product: props.data
             }
-            let {payload: {status, message}} = await dispatch(addProductIntoCart(payload));
+            let {payload: {status, message}} = await dispatch(addProductIntoWishlist(payload));
             if(status === 200) {
                 Swal.fire({
                     icon: 'success',
                     title: message,
-                    // html: '',
                 });
             }
         } else {
             history.push("/login");
         }
+    }
+
+    const onClickCompare = async () => {
+        dispatch({ type: "products/setProductToCompare", payload: product_ID})
+        history.push('/compare');
     }
 
     const onClickAddToCart = async () => {
@@ -102,7 +98,7 @@ const ProductCard = (props) => {
                     }
 
                     <div className="actions">
-                        <a className="action wishlist" title="Wishlist" onClick={onClickWishlist}><AiOutlineHeart /></a>
+                        <a className="action wishlist" style={InWishlist(wishlist, product_ID) ? {backgroundColor: '#fd7e14' } : {}} title="Wishlist" onClick={onClickWishlist}><AiOutlineHeart color={InWishlist(wishlist, product_ID) ? 'white' : ''} /></a>
                         <a className="action quickview" title="Quick view" onClick={() => setModalShow(true)}><AiOutlineExpand /></a>
                         <a className="action compare" title="Compare" onClick={onClickCompare}><FaExchangeAlt /></a>
                     </div>

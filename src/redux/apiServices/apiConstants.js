@@ -14,6 +14,7 @@ module.exports = {
     // CART
     GET_CART_DATA: '/api/user/getCartData',
     ADD_PRODUCT_INTO_CART: '/api/user/addProductIntoCart',
+    UPDATE_PRODUCT_INTO_CART: '/api/user/updateProductIntoCart',
     REMOVE_PRODUCT_FROM_CART: '/api/user/removeProductFromCart',
     EMPTY_CART: '/api/user/emptyCart',
 

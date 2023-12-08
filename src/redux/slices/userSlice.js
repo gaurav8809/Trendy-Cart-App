@@ -7,7 +7,7 @@ import {
     AUTHENTICATE,
     BASE_URL, EMPTY_CART, EMPTY_WISHLIST, GET_CART_DATA, GET_WISHLIST_DATA,
     REGISTER,
-    REMOVE_PRODUCT_FROM_CART, REMOVE_PRODUCT_FROM_WISHLIST
+    REMOVE_PRODUCT_FROM_CART, REMOVE_PRODUCT_FROM_WISHLIST, UPDATE_PRODUCT_INTO_CART
 } from "../apiServices/apiConstants";
 import {API} from "../apiServices/apiCall";
 import userState from "../store/userState";
@@ -34,8 +34,12 @@ export const addProductIntoCart = createAsyncThunk('user/addProductIntoCart', as
     return response;
 });
 
+export const updateProductIntoCart = createAsyncThunk('user/updateProductIntoCart', async (data) => {
+    let response = await API(BASE_URL + UPDATE_PRODUCT_INTO_CART, 'POST', data);
+    return response;
+});
+
 export const removeProductFromCart = createAsyncThunk('user/removeProductFromCart', async (data) => {
-    debugger
     let response = await API(BASE_URL + REMOVE_PRODUCT_FROM_CART, 'POST', data);
     return response;
 });
@@ -97,6 +101,9 @@ const userSlice = createSlice({
             .addCase(addProductIntoCart.fulfilled, (state, action) => {
                 state.cart = action.payload?.response || null;
             })
+            .addCase(updateProductIntoCart.fulfilled, (state, action) => {
+                state.cart = action.payload?.response || null;
+            })
             .addCase(removeProductFromCart.fulfilled, (state, action) => {
                 state.cart = action.payload.response;
             })
@@ -106,16 +113,16 @@ const userSlice = createSlice({
 
             // Wishlist
             .addCase(getWishlistData.fulfilled, (state, action) => {
-                state.cart = action.payload?.response;
+                state.wishlist = action.payload?.response;
             })
             .addCase(addProductIntoWishlist.fulfilled, (state, action) => {
-                state.cart = action.payload?.response || null;
+                state.wishlist = action.payload?.response || null;
             })
             .addCase(removeProductFromWishlist.fulfilled, (state, action) => {
-                state.cart = action.payload.response;
+                state.wishlist = action.payload.response;
             })
             .addCase(emptyWishlist.fulfilled, (state, action) => {
-                state.cart = null;
+                state.wishlist = null;
             })
     }
 });
