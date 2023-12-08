@@ -8,22 +8,22 @@ import img4 from '../../assets/img/team/team4.png'
 
 const TeamData =[
     {
-        img:img1,
-        name:"Ms. Sandela",
+        img: 'https://andshop-reactjs.netlify.app/static/media/team1.2bfac19d.png',
+        name:"Mr. Gaurav",
         posation:"CEO",
     },
     {
-        img:img2,
+        img: 'https://andshop-reactjs.netlify.app/static/media/team2.16d0ce15.png',
         name:"Mr. Heroas",
         posation:"Head Of Markating",
     },
     {
-        img:img3,
+        img: 'https://andshop-reactjs.netlify.app/static/media/team3.16987d56.png',
         name:"Ms. Valona",
         posation:"Manager",
     },
     {
-        img:img4,
+        img: 'https://andshop-reactjs.netlify.app/static/media/team4.faeb98ce.png',
         name:"Ms. Raka",
         posation:"Admin",
     }
@@ -34,7 +34,7 @@ const Team = (props) => {
         <>
         <section id="team_area" className={`ptb-100 ${props.class}`} >
         <div className="container">
-            <Heading heading="Expert Team" para="This is our expert team members of AndShop" />
+            <Heading heading="Expert Team" para="This is our expert team members of Trendy Cart" />
             <div className="row">
                 {TeamData.map((data, index)=>(
                     <div className="col-lg-3" key={index}>
@@ -60,7 +60,7 @@ const Team = (props) => {
                 ))}
             </div>
         </div>
-    </section>  
+    </section>
         </>
     )
 }

@@ -43,40 +43,40 @@ const MyVerticallyCenteredModal = (props) => {
                                 <div className="row">
                                     <div className="col-lg-5 col-md-6 col-sm-12 col-12">
                                         <div className="products_modal_sliders">
-                                            <img src={props.data.img} alt="img" />
+                                            <img src={props.data.portfolioImage} alt="img" />
                                         </div>
                                     </div>
                                     <div className="col-lg-7 col-md-6 col-sm-12 col-12">
                                         <div className="modal_product_content_one">
-                                            <h3>{props.data.title}</h3>
-                                            <div className="reviews_rating">
-                                                <RatingStar maxScore={5} rating={props.data.rating.rate} id="rating-star-modal" />
-                                                <span>({props.data.rating.count} Customer Reviews)</span>
-                                            </div>
-                                            <h4>${props.data.price}.00 <del style={{fontWeight: 400, color: 'gray'}}>${parseInt(props.data.price) + 17}.00</del> </h4>
+                                            <h3>{props.data.name}</h3>
+                                            {/*<div className="reviews_rating">*/}
+                                            {/*    <RatingStar maxScore={5} rating={4} id="rating-star-modal" />*/}
+                                            {/*    <span>({10} Customer Reviews)</span>*/}
+                                            {/*</div>*/}
+                                            <h4>${props.data.price} <del style={{fontWeight: 400, color: 'gray'}}>${parseInt(props.data.price) + 17}.00</del> </h4>
                                             <p>{props.data.description}</p>
-                                            <div className="variable-single-item">
-                                                <span>Color</span>
-                                                <div className="product-variable-color">
-                                                    <label htmlFor="modal-product-color-red">
-                                                        <input name="modal-product-color" id="modal-product-color-red"
-                                                            className="color-select" type="radio" defaultChecked/>
-                                                        <span className="product-color-red"></span>
-                                                    </label>
+                                            {/*<div className="variable-single-item">*/}
+                                            {/*    <span>Color</span>*/}
+                                            {/*    <div className="product-variable-color">*/}
+                                            {/*        <label htmlFor="modal-product-color-red">*/}
+                                            {/*            <input name="modal-product-color" id="modal-product-color-red"*/}
+                                            {/*                className="color-select" type="radio" defaultChecked/>*/}
+                                            {/*            <span className="product-color-red"></span>*/}
+                                            {/*        </label>*/}
 
-                                                    <label htmlFor="modal-product-color-green">
-                                                        <input name="modal-product-color" id="modal-product-color-green"
-                                                            className="color-select" type="radio" />
-                                                        <span className="product-color-green"></span>
-                                                    </label>
+                                            {/*        <label htmlFor="modal-product-color-green">*/}
+                                            {/*            <input name="modal-product-color" id="modal-product-color-green"*/}
+                                            {/*                className="color-select" type="radio" />*/}
+                                            {/*            <span className="product-color-green"></span>*/}
+                                            {/*        </label>*/}
 
-                                                    <label htmlFor="modal-product-color-blue">
-                                                        <input name="modal-product-color" id="modal-product-color-blue"
-                                                            className="color-select" type="radio" />
-                                                        <span className="product-color-blue"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
+                                            {/*        <label htmlFor="modal-product-color-blue">*/}
+                                            {/*            <input name="modal-product-color" id="modal-product-color-blue"*/}
+                                            {/*                className="color-select" type="radio" />*/}
+                                            {/*            <span className="product-color-blue"></span>*/}
+                                            {/*        </label>*/}
+                                            {/*    </div>*/}
+                                            {/*</div>*/}
                                             <form id="product_count_form_one">
                                                 <div className="product_count_one">
                                                     <div className="plus-minus-input">
@@ -114,7 +114,6 @@ const MyVerticallyCenteredModal = (props) => {
                                                         <WhatsappIcon size={32} round />
                                                     </WhatsappShareButton>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>

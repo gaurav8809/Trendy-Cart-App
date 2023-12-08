@@ -9,9 +9,9 @@ const ProductDetails = () => {
     return (
         <>
             <Header />
-            <Banner title="Product Details" />
+            {/*<Banner title="Product Details" />*/}
             <ProductDetailsOne />
-            <InstgramSlider />
+            {/*<InstgramSlider />*/}
             <Footer />
         </>
     )

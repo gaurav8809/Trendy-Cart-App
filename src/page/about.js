@@ -10,7 +10,7 @@ const About = () => {
             <Header />
             <Banner title="About" />
             <AboutComponent />
-            <InstgramSlider />
+            {/*<InstgramSlider />*/}
             <Footer />
         </>
     )

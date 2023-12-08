@@ -1,4 +1,4 @@
-// fashion img 
+// fashion img
 import img1 from '../../assets/img/product-image/product1.png'
 import img2 from '../../assets/img/product-image/product2.png'
 import img3 from '../../assets/img/product-image/product3.png'
@@ -10,7 +10,7 @@ import img8 from '../../assets/img/product-image/product8.png'
 import img9 from '../../assets/img/product-image/product9.png'
 import img10 from '../../assets/img/product-image/product10.png'
 
-// furniture img 
+// furniture img
 import imgf1 from '../../assets/img/furniture/product/1.jpg'
 import imgf2 from '../../assets/img/furniture/product/2.jpg'
 import imgf3 from '../../assets/img/furniture/product/3.jpg'
@@ -22,7 +22,7 @@ import imgf8 from '../../assets/img/furniture/product/8.jpg'
 import imgf9 from '../../assets/img/furniture/product/9.jpg'
 import imgf10 from '../../assets/img/furniture/product/10.jpg'
 
-// electronics img 
+// electronics img
 import imge1 from '../../assets/img/electronics/product/1.jpg'
 import imge2 from '../../assets/img/electronics/product/2.jpg'
 import imge3 from '../../assets/img/electronics/product/3.jpg'
@@ -34,7 +34,7 @@ import imge8 from '../../assets/img/electronics/product/8.jpg'
 import imge9 from '../../assets/img/electronics/product/9.jpg'
 import imge10 from '../../assets/img/electronics/product/10.jpg'
 
-// pharmacy img 
+// pharmacy img
 import Pro1 from '../../assets/img/pharmacy/product/pro-1.png'
 import Pro2 from '../../assets/img/pharmacy/product/pro-2.png'
 import Pro3 from '../../assets/img/pharmacy/product/pro-3.png'

@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'font-awesome/css/font-awesome.min.css'
-import MessengerCustomerChat from 'react-messenger-customer-chat';
+// import MessengerCustomerChat from 'react-messenger-customer-chat';
 
 import App from './App';
-
-import { store } from './app/store';
+import {persistor, store} from './redux/store';
 import { Provider } from 'react-redux';
 
 // import Custom Css
@@ -13,12 +12,15 @@ import "./assets/css/style.css"
 import "./assets/css/color.css"
 import "./assets/css/responsive.css"
 import "./assets/css/animate.min.css"
+import {PersistGate} from "redux-persist/integration/react";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       {/*<MessengerCustomerChat pageId="105124045291751" appId="385408413223722" />*/}
-      <App />
+        <PersistGate loading={null} persistor={persistor}>
+            <App />
+        </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -1,54 +1,105 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import ProductInfo from './ProductInfo'
 import RelatedProduct from './RelatedProduct'
-import { Link } from 'react-router-dom'
+import {Link, useHistory, withRouter, useParams} from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from 'react-router-dom';
 import { RatingStar } from "rating-star";
 import Swal from 'sweetalert2';
+import productState from "../../../redux/store/productState";
+import {getProductById} from "../../../redux/slices/productSlice";
+import NO_PRODUCT from "../../../assets/img/common/no-product.png";
+import {addProductIntoCart} from "../../../redux/slices/userSlice";
+import {InCart} from "../../../handlers/appHandler";
 
-const ProductDetailsOne = () => {
+const ProductDetailsOne = (props) => {
+
+    let { id: product_ID } = props.match.params;
+    // searchParams.get("__firebase_request_key")
     let dispatch = useDispatch();
+    let history = useHistory();
 
-    let { id } = useParams();
-    dispatch({ type: "products/getProductById", payload: { id } });
-    let product = useSelector((state) => state.products.single);
+    dispatch(getProductById(product_ID));
+    const productsReducer = useSelector(state => state.products);
+    const user = useSelector((state) => state.user.user);
+    const cart = useSelector((state) => state.user.cart);
 
-    // Add to cart
-    const addToCart = async (id) => {
-        dispatch({ type: "products/addToCart", payload: { id } })
-    }
+    const [product, setProduct] = useState(productsReducer?.selectedProduct);
+    let [selectedSize, setSelectedSize] = useState(InCart(cart, product.product_ID) ? InCart(cart, product.product_ID).size : null);
+    let [selectedQty, setSelectedQty] = useState(InCart(cart, product.product_ID) ? InCart(cart, product.product_ID).qty : 1);
+
+    useEffect(async () => {
+        setProduct(productsReducer.selectedProduct);
+        setImg(productsReducer.selectedProduct.portfolioImage)
+    }, [productsReducer]);
+
+    const [img, setImg] = useState(product?.portfolioImage);
 
     // Add to Favorite
-    const addToFav = async (id) => {
-        dispatch({ type: "products/addToFav", payload: { id } })
+    const addToFav = async (product_ID) => {
+        dispatch({ type: "products/addToFav", payload: { product_ID } })
     }
 
-    // Add to Compare
-    const addToComp = async (id) => {
-        dispatch({ type: "products/addToComp", payload: { id } })
+    const onClickAddToCart = async () => {
+        if(!selectedSize) {
+            Swal.fire({
+                title: "Size not selected!",
+                text: 'Please select the size first!!',
+                icon: "warning"
+            });
+            return;
+        }
+
+        if(user) {
+            let payload = {
+                qty: selectedQty,
+                size: selectedSize,
+                user,
+                product: product
+            }
+            debugger
+            let {payload: {status, message}} = await dispatch(addProductIntoCart(payload));
+            if(status === 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: message,
+                    // html: '',
+                });
+            }
+        } else {
+            history.push("/login");
+        }
     }
 
     const colorSwatch = (i) => {
-        let data = product.color.find(item => item.color === i)
-        setImg(data.img)
+        // let data = product.color.find(item => item.color === i)
+        // setImg(data.img)
     }
 
     const [count, setCount] = useState(1)
 
-    const [img, setImg] = useState(product.img)
 
     const incNum = () => {
-        setCount(count + 1)
-    }
-    const decNum = () => {
-        if (count > 1) {
-            setCount(count - 1)
+        if (selectedQty < product.stockQty) {
+            setSelectedQty(selectedQty + 1)
         } else {
-            Swal.fire('Sorry!', "Minimun Quantity Reached",'warning')
-            setCount(1)
+            Swal.fire('Sorry!', "Maximum stock availability reached",'warning')
+            // setSelectedQty(1)
         }
     }
+    const decNum = () => {
+        if (selectedQty > 1) {
+            setSelectedQty(selectedQty - 1)
+        } else {
+            Swal.fire('Sorry!', "Minimum Quantity Reached",'warning')
+            setSelectedQty(1)
+        }
+    }
+
+    const onClickCompare = () => {
+        dispatch({ type: "products/setProductToCompare", payload: product.product_ID})
+        history.push('/compare');
+    }
+
     return (
         <>{product
             ?
@@ -65,40 +116,39 @@ const ProductDetailsOne = () => {
                                 <div className="modal_product_content_one">
                                     <h3>{product.title}</h3>
                                     <div className="reviews_rating">
-                                        <RatingStar maxScore={5} rating={product.rating.rate} id="rating-star-common" />
-                                        <span>({product.rating.count} Customer Reviews)</span>
+                                        <RatingStar maxScore={5} rating={product.price} id="rating-star-common" />
+                                        <span>({3} Customer Reviews)</span>
                                     </div>
                                     <h4>${product.price}.00 <del>${parseInt(product.price) + 17}.00</del> </h4>
                                     <p>{product.description}</p>
                                     <div className="customs_selects">
-                                        <select name="product" className="customs_sel_box">
-                                            <option value="volvo">Size</option>
-                                            <option value="xl">XL</option>
-                                            <option value="small">S</option>
-                                            <option value="medium">M</option>
-                                            <option value="learz">L</option>
+                                        <select name="product" className="customs_sel_box" onChange={e => setSelectedSize(e.target.value)}>
+                                            <option value="" disabled selected>Size</option>
+                                            {
+                                                product.size?.map((item) => <option selected={item === selectedSize} key={item} value={item}>{item}</option>)
+                                            }
                                         </select>
                                     </div>
-                                    <div className="variable-single-item">
-                                        <span>Color</span>
-                                        <div className="product-variable-color">
-                                            <label htmlFor="modal-product-color-red1">
-                                                <input name="modal-product-color" id="modal-product-color-red1"
-                                                    className="color-select" type="radio" onChange={() => { colorSwatch('red') }} defaultChecked/>
-                                                <span className="product-color-red"></span>
-                                            </label>
-                                            <label htmlFor="modal-product-color-green3">
-                                                <input name="modal-product-color" id="modal-product-color-green3"
-                                                    className="color-select" type="radio" onChange={() => { colorSwatch('green') }} />
-                                                <span className="product-color-green"></span>
-                                            </label>
-                                            <label htmlFor="modal-product-color-blue5">
-                                                <input name="modal-product-color" id="modal-product-color-blue5"
-                                                    className="color-select" type="radio" onChange={() => { colorSwatch('blue') }} />
-                                                <span className="product-color-blue"></span>
-                                            </label>
-                                        </div>
-                                    </div>
+                                    {/*<div className="variable-single-item">*/}
+                                    {/*    <span>Color</span>*/}
+                                    {/*    <div className="product-variable-color">*/}
+                                    {/*        <label htmlFor="modal-product-color-red1">*/}
+                                    {/*            <input name="modal-product-color" id="modal-product-color-red1"*/}
+                                    {/*                className="color-select" type="radio" onChange={() => { colorSwatch('red') }} defaultChecked/>*/}
+                                    {/*            <span className="product-color-red"></span>*/}
+                                    {/*        </label>*/}
+                                    {/*        <label htmlFor="modal-product-color-green3">*/}
+                                    {/*            <input name="modal-product-color" id="modal-product-color-green3"*/}
+                                    {/*                className="color-select" type="radio" onChange={() => { colorSwatch('green') }} />*/}
+                                    {/*            <span className="product-color-green"></span>*/}
+                                    {/*        </label>*/}
+                                    {/*        <label htmlFor="modal-product-color-blue5">*/}
+                                    {/*            <input name="modal-product-color" id="modal-product-color-blue5"*/}
+                                    {/*                className="color-select" type="radio" onChange={() => { colorSwatch('blue') }} />*/}
+                                    {/*            <span className="product-color-blue"></span>*/}
+                                    {/*        </label>*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
                                     <form id="product_count_form_two">
                                         <div className="product_count_one">
                                             <div className="plus-minus-input">
@@ -107,7 +157,7 @@ const ProductDetailsOne = () => {
                                                         <i className="fa fa-minus"></i>
                                                     </button>
                                                 </div>
-                                                <input className="form-control" type="number" value={count} readOnly />
+                                                <input className="form-control"  style={{width: 60}} type="number" value={selectedQty} readOnly />
                                                 <div className="input-group-button">
                                                     <button type="button" className="button" onClick={incNum}>
                                                         <i className="fa fa-plus"></i>
@@ -119,22 +169,25 @@ const ProductDetailsOne = () => {
                                     <div className="links_Product_areas">
                                         <ul>
                                             <li>
-                                                <a href="#!" className="action wishlist" title="Wishlist" onClick={() => addToFav(product.id)}><i
+                                                <a className="action wishlist" title="Wishlist" onClick={() => addToFav(product_ID)}><i
                                                     className="fa fa-heart"></i>Add To Wishlist</a>
                                             </li>
                                             <li>
-                                                <a href="#!" className="action compare" onClick={() => addToComp(product.id)} title="Compare"><i
+                                                <a className="action compare" onClick={onClickCompare} title="Compare"><i
                                                     className="fa fa-exchange"></i>Add To Compare</a>
                                             </li>
                                         </ul>
-                                        <a href="#!" className="theme-btn-one btn-black-overlay btn_sm" onClick={() => addToCart(product.id)}>Add To Cart</a>
+                                        {
+                                            !InCart(cart, product.product_ID) &&
+                                            <a className="theme-btn-one btn-black-overlay btn_sm" onClick={onClickAddToCart}>Add To Cart</a>
+                                        }
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <ProductInfo />
+                    <ProductInfo product={product} />
                 </div>
             </section>
             :
@@ -142,7 +195,7 @@ const ProductDetailsOne = () => {
                 <div className="row">
                     <div className="col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-12 col-12">
                         <div className="empaty_cart_area">
-                            <img src={img} alt="img" />
+                            <img src={NO_PRODUCT} alt="img" style={{height: 200, width: 300}} />
                             <h2>PRODUCT NOT FOUND</h2>
                             <h3>Sorry Mate... No Item Found according to Your query!</h3>
                             <Link to="/shop" className="btn btn-black-overlay btn_sm">Continue Shopping</Link>
@@ -157,4 +210,4 @@ const ProductDetailsOne = () => {
     )
 }
 
-export default ProductDetailsOne
+export default withRouter(ProductDetailsOne)
