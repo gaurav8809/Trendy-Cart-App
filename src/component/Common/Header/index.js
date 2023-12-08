@@ -11,8 +11,7 @@ import svgsearch from '../../../assets/img/svg/search.svg'
 
 import { useDispatch, useSelector } from "react-redux";
 import Swal from 'sweetalert2'
-import banner from "../../../assets/img/common/nav_banner.png";
-import {removeProductFromCart} from "../../../redux/slices/userSlice";
+import {removeProductFromCart, removeProductFromWishlist} from "../../../redux/slices/userSlice";
 
 const Header = () => {
     const [click, setClick] = useState(false);
@@ -91,12 +90,13 @@ const Header = () => {
             ],
         },
     ]);
-    // const [category, setShow] = useState();
     const history = useHistory()
-    let {cart} = useSelector((state) => state.user);
-    let productsData = useSelector((state) => state.products.products);
+    const {cart, wishlist: favorites} = useSelector((state) => state.user);
+    const productsData = useSelector((state) => state.products.products);
+
 
     let cartProducts = [];
+    let favProducts = [];
 
     cart?.products.filter(item=> {
         productsData.filter(item2 => {
@@ -106,11 +106,18 @@ const Header = () => {
         })
     });
 
-    let favorites = useSelector((state) => state.products.favorites);
+    favorites?.products.filter(item=> {
+        productsData.filter(item2 => {
+            if(item.product_ID === item2.product_ID) {
+                favProducts.push(item2);
+            }
+        })
+    });
+
+    // let favorites = useSelector((state) => state.products.favorites);
     let dispatch = useDispatch();
 
     const rmCartProduct = (id) => {
-        dispatch({ type: "products/removeCart", payload: { id } });
         Swal.fire({
             title: "Are you sure?",
             text: "This will remove product from your cart",
@@ -142,13 +149,34 @@ const Header = () => {
     }
 
     const rmFavProduct = (id) => {
-        dispatch({ type: "products/removeFav", payload: { id } });
-    }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "This will remove product from your wishlist",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
 
-    const cartTotal = () => {
-        return cart.reduce(function (total, item) {
-            return total + ((item.quantity || 1) * item.price)
-        }, 0)
+                let payload = {
+                    ...favorites,
+                    wishlist_item: favorites.products.find(item => item.product_ID === id)
+                };
+                let {payload: {status, message, response}} = await dispatch(removeProductFromWishlist(payload));
+                if(status === 200) {
+                    if(response === null) {
+                        document.querySelector("#offcanvas-add-cart").style = ("transform: translateX(100%);")
+                    }
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: message,
+                        icon: "success"
+                    });
+                }
+            }
+        });
     }
 
     const handleClick = () => {
@@ -278,18 +306,21 @@ const Header = () => {
                                     </div>
 
                                     <ul className="header-action-link action-color--black action-hover-color--golden">
-                                        {/*<li>*/}
-                                        {/*    {favorites.length*/}
-                                        {/*        ? <a href="#offcanvas-wishlish" className="offcanvas-toggle" onClick={handleWish}><i className="fa fa-heart"></i><span className="item-count">{favorites.length}</span></a>*/}
-                                        {/*        : <a href="#offcanvas-wishlish" className="offcanvas-toggle"><i className="fa fa-heart"></i><span className="item-count">{favorites.length}</span></a>*/}
-                                        {/*    }*/}
-                                        {/*</li>*/}
+                                        {
+                                            favorites &&
+                                            <li>
+                                                {favorites?.products.length
+                                                    ? <a href="#offcanvas-wishlish" className="offcanvas-toggle" onClick={handleWish}><i className="fa fa-heart"></i><span className="item-count">{favorites.products.length}</span></a>
+                                                    : <a href="#offcanvas-wishlish" className="offcanvas-toggle"><i className="fa fa-heart"></i><span className="item-count">{favorites.products.length}</span></a>
+                                                }
+                                            </li>
+                                        }
                                         {
                                             cart &&
                                             <li>
                                                 {cartProducts?.length
-                                                    ? <a href="#!" className="offcanvas-toggle" onClick={handleClick}><i className="fa fa-shopping-bag"></i><span className="item-count">{cartProducts.length}</span></a>
-                                                    : <a href="#!" className="offcanvas-toggle"><i className="fa fa-shopping-bag"></i><span className="item-count">{cartProducts.length}</span></a>
+                                                    ? <a className="offcanvas-toggle" onClick={handleClick}><i className="fa fa-shopping-bag"></i><span className="item-count">{cartProducts.length}</span></a>
+                                                    : <a className="offcanvas-toggle"><i className="fa fa-shopping-bag"></i><span className="item-count">{cartProducts.length}</span></a>
                                                 }
                                             </li>
                                         }
@@ -581,7 +612,7 @@ const Header = () => {
                                     </div>
                                 </div>
                                 <div className="offcanvas-wishlist-item-delete text-right">
-                                    <a href="#!" className="offcanvas-wishlist-item-delete" onClick={() => rmCartProduct(data.product_ID)}><i className="fa fa-trash"></i></a>
+                                    <a className="offcanvas-wishlist-item-delete" onClick={() => rmCartProduct(data.product_ID)}><i className="fa fa-trash"></i></a>
                                 </div>
                             </li>
                         ))}
@@ -611,27 +642,27 @@ const Header = () => {
                     <h4 className="offcanvas-title">Wishlist</h4>
 
                     <ul className="offcanvas-wishlist">
-                        {/*{favorites.map((data, index) => (*/}
-                        {/*    <li className="offcanvas-wishlist-item-single" key={index}>*/}
-                        {/*        <div className="offcanvas-wishlist-item-block">*/}
-                        {/*            <Link to={`/product-details-one/${data.id}`} className="offcanvas-wishlist-item-image-link" >*/}
-                        {/*                <img src={data.img} alt="img"*/}
-                        {/*                    className="offcanvas-wishlist-image" />*/}
-                        {/*            </Link>*/}
-                        {/*            <div className="offcanvas-wishlist-item-content">*/}
-                        {/*                <Link to={`/product-details-one/${data.id}`} className="offcanvas-wishlist-item-link">{data.title}</Link>*/}
-                        {/*                <div className="offcanvas-wishlist-item-details">*/}
-                        {/*                    <span className="offcanvas-wishlist-item-details-quantity">1 x*/}
-                        {/*                    </span>*/}
-                        {/*                    <span className="offcanvas-wishlist-item-details-price">{data.price}</span>*/}
-                        {/*                </div>*/}
-                        {/*            </div>*/}
-                        {/*        </div>*/}
-                        {/*        <div className="offcanvas-wishlist-item-delete text-right">*/}
-                        {/*            <a href="#!" className="offcanvas-wishlist-item-delete" onClick={() => rmFavProduct(data.id)}><i className="fa fa-trash"></i></a>*/}
-                        {/*        </div>*/}
-                        {/*    </li>*/}
-                        {/*))}*/}
+                        {favProducts?.map((data, index) => {
+                            return (
+                                <li className="offcanvas-wishlist-item-single" key={index}>
+                                    <div className="offcanvas-wishlist-item-block">
+                                        <Link to={`/product-details-one/${data.product_ID}`} className="offcanvas-wishlist-item-image-link" >
+                                            <img src={data?.portfolioImage} alt="img"
+                                                className="offcanvas-wishlist-image" />
+                                        </Link>
+                                        <div className="offcanvas-wishlist-item-content">
+                                            <Link to={`/product-details-one/${data.product_ID}`} className="offcanvas-wishlist-item-link">{data.name.substring(0, 25)}{data.name.length < 25 ? '' : '...'}</Link>
+                                            <div className="offcanvas-wishlist-item-details">
+                                                <span className="offcanvas-wishlist-item-details-price">${data.price}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="offcanvas-wishlist-item-delete text-right">
+                                        <a className="offcanvas-wishlist-item-delete" onClick={() => rmFavProduct(data.product_ID)}><i className="fa fa-trash"></i></a>
+                                    </div>
+                                </li>
+                            )}
+                        )}
                     </ul>
                     <ul className="offcanvas-wishlist-action-button">
                         <li>

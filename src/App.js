@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 // import {getProducts} from "./redux/actions/productActions";
 import {getProducts} from "./redux/slices/productSlice";
 import {BASE_URL, GET_PRODUCTS} from "./redux/apiServices/apiConstants";
+import {getCartData, getWishlistData} from "./redux/slices/userSlice";
 
 // All Page Lazy Import
 const Furniture = loadable(() => pMinDelay(import('./page/furniture'), 250), { fallback: <Loading /> });
@@ -72,15 +73,21 @@ const Fashion = loadable(() => pMinDelay(import('./page/'), 250), { fallback: <L
 const App = () => {
 
   let dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     getAllRequiredData();
   }, []);
 
   const getAllRequiredData = async () => {
-    await dispatch(getProducts());
+    await dispatch(getProducts())
+        .then(async () => {
+          if(user) {
+            await dispatch(getCartData(user.user_ID));
+            await dispatch(getWishlistData(user.user_ID));
+          }
+        });
   };
-
 
   return (
     <>

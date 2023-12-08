@@ -8,8 +8,15 @@ import Swal from 'sweetalert2';
 import productState from "../../../redux/store/productState";
 import {getProductById} from "../../../redux/slices/productSlice";
 import NO_PRODUCT from "../../../assets/img/common/no-product.png";
-import {addProductIntoCart} from "../../../redux/slices/userSlice";
-import {InCart} from "../../../handlers/appHandler";
+import {
+    addProductIntoCart,
+    addProductIntoWishlist,
+    removeProductFromCart,
+    updateProductIntoCart
+} from "../../../redux/slices/userSlice";
+import {InCart, InWishlist} from "../../../handlers/appHandler";
+import {AiOutlineHeart} from "react-icons/ai";
+import _ from 'lodash';
 
 const ProductDetailsOne = (props) => {
 
@@ -22,6 +29,7 @@ const ProductDetailsOne = (props) => {
     const productsReducer = useSelector(state => state.products);
     const user = useSelector((state) => state.user.user);
     const cart = useSelector((state) => state.user.cart);
+    const {wishlist} = useSelector((state) => state.user);
 
     const [product, setProduct] = useState(productsReducer?.selectedProduct);
     let [selectedSize, setSelectedSize] = useState(InCart(cart, product.product_ID) ? InCart(cart, product.product_ID).size : null);
@@ -30,7 +38,7 @@ const ProductDetailsOne = (props) => {
     useEffect(async () => {
         setProduct(productsReducer.selectedProduct);
         setImg(productsReducer.selectedProduct.portfolioImage)
-    }, [productsReducer]);
+    }, [productsReducer, user]);
 
     const [img, setImg] = useState(product?.portfolioImage);
 
@@ -40,30 +48,67 @@ const ProductDetailsOne = (props) => {
     }
 
     const onClickAddToCart = async () => {
-        if(!selectedSize) {
-            Swal.fire({
-                title: "Size not selected!",
-                text: 'Please select the size first!!',
-                icon: "warning"
-            });
-            return;
-        }
-
         if(user) {
-            let payload = {
-                qty: selectedQty,
-                size: selectedSize,
-                user,
-                product: product
-            }
-            debugger
-            let {payload: {status, message}} = await dispatch(addProductIntoCart(payload));
-            if(status === 200) {
+            if(!selectedSize) {
                 Swal.fire({
-                    icon: 'success',
-                    title: message,
-                    // html: '',
+                    title: "Size not selected!",
+                    text: 'Please select the size first!!',
+                    icon: "warning"
                 });
+                return;
+            }
+            if(InCart(cart, product.product_ID) ) {
+                if(selectedSize === InCart(cart, product.product_ID).size && selectedQty === InCart(cart, product.product_ID).qty) {
+                    Swal.fire({
+                        title: "No changes made!",
+                        text: 'Please update any value to make changes !!',
+                        icon: "warning"
+                    });
+                    return;
+                } else {
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "This will update new changes to your product in cart",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, update it!"
+                    }).then(async (result) => {
+                        if (result.isConfirmed) {
+                            let payload = {
+                                qty: selectedQty,
+                                size: selectedSize,
+                                user,
+                                product: product,
+                                cart: _.omit(cart, ['products'])
+                            }
+                            let {payload: {status, message}} = await dispatch(updateProductIntoCart(payload));
+                            if(status === 200) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: message,
+                                    // html: '',
+                                });
+                            }
+                        }
+                    });
+                }
+            } else {
+                let payload = {
+                    qty: selectedQty,
+                    size: selectedSize,
+                    user,
+                    product: product
+                }
+                let {payload: {status, message}} = await dispatch(addProductIntoCart(payload));
+                if(status === 200) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: message,
+                        // html: '',
+                    });
+                }
             }
         } else {
             history.push("/login");
@@ -76,7 +121,6 @@ const ProductDetailsOne = (props) => {
     }
 
     const [count, setCount] = useState(1)
-
 
     const incNum = () => {
         if (selectedQty < product.stockQty) {
@@ -100,6 +144,32 @@ const ProductDetailsOne = (props) => {
         history.push('/compare');
     }
 
+    const onClickWishlist = async () => {
+        if(InWishlist(wishlist, product_ID)) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Already in wishlist',
+                html: 'Go to wishlist to add it in cart'
+            });
+            return;
+        }
+        if(user) {
+            let payload = {
+                user,
+                product: props.data
+            }
+            let {payload: {status, message}} = await dispatch(addProductIntoWishlist(payload));
+            if(status === 200) {
+                Swal.fire({
+                    icon: 'success',
+                    title: message,
+                });
+            }
+        } else {
+            history.push("/login");
+        }
+    }
+
     return (
         <>{product
             ?
@@ -119,7 +189,7 @@ const ProductDetailsOne = (props) => {
                                         <RatingStar maxScore={5} rating={product.price} id="rating-star-common" />
                                         <span>({3} Customer Reviews)</span>
                                     </div>
-                                    <h4>${product.price}.00 <del>${parseInt(product.price) + 17}.00</del> </h4>
+                                    <h4>${product.price} <del>${parseInt(product.price) + 17}.00</del> </h4>
                                     <p>{product.description}</p>
                                     <div className="customs_selects">
                                         <select name="product" className="customs_sel_box" onChange={e => setSelectedSize(e.target.value)}>
@@ -169,8 +239,8 @@ const ProductDetailsOne = (props) => {
                                     <div className="links_Product_areas">
                                         <ul>
                                             <li>
-                                                <a className="action wishlist" title="Wishlist" onClick={() => addToFav(product_ID)}><i
-                                                    className="fa fa-heart"></i>Add To Wishlist</a>
+                                                <a className="action wishlist" title="Wishlist" onClick={onClickWishlist}><i
+                                                    className="fa fa-heart"></i>{InWishlist(wishlist, product_ID) ? 'In wishlist' : 'Add To Wishlist'}</a>
                                             </li>
                                             <li>
                                                 <a className="action compare" onClick={onClickCompare} title="Compare"><i
@@ -178,8 +248,9 @@ const ProductDetailsOne = (props) => {
                                             </li>
                                         </ul>
                                         {
-                                            !InCart(cart, product.product_ID) &&
-                                            <a className="theme-btn-one btn-black-overlay btn_sm" onClick={onClickAddToCart}>Add To Cart</a>
+                                            <a className="theme-btn-one btn-black-overlay btn_sm" onClick={onClickAddToCart}>{
+                                                InCart(cart, product.product_ID) ? 'Update Cart' : 'Add To Cart'
+                                            }</a>
                                         }
                                     </div>
 
