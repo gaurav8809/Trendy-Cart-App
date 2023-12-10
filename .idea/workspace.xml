@@ -6,16 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="cb230ad2-eb94-4650-9b4d-fb8a308f4a8c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Common/Header/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/Header/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Common/Product/ProductCard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/Product/ProductCard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Checkout/YourOrders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Checkout/YourOrders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Checkout/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Checkout/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Common/ProductDetails/ProductDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/ProductDetails/ProductDetails.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Login/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Login/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/WishList/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/WishList/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handlers/appHandler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handlers/appHandler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/MyAccountDashboard/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/MyAccountDashboard/Order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/OrderSuccess/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/OrderSuccess/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/apiServices/apiConstants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/apiServices/apiConstants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/slices/productSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/productSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/slices/userSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/userSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,7 +126,8 @@
       <workItem from="1701294464963" duration="4975000" />
       <workItem from="1701578661550" duration="63000000" />
       <workItem from="1701885040202" duration="1144000" />
-      <workItem from="1701984002508" duration="22501000" />
+      <workItem from="1701984002508" duration="31459000" />
+      <workItem from="1702144519353" duration="7859000" />
     </task>
     <servers />
   </component>

@@ -18,7 +18,7 @@ import pinterest from '../../assets/img/email/pinterest.png'
 const OrderSuccess = () => {
     const history = useHistory();
     const routeChange = () => {
-        history.goBack()
+        history.push('/my-account/customer-order');
     };
     return (
         <>

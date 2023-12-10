@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from "react-redux";
 import Swal from 'sweetalert2';
 import { useHistory } from "react-router-dom"
-import {authenticate, getCartData, getWishlistData} from "../../redux/slices/userSlice";
+import {authenticate, getCartData, getOrderData, getWishlistData} from "../../redux/slices/userSlice";
 
 const LoginArea = () => {
-    let dispatch = useDispatch();
+    const dispatch = useDispatch();
     const history = useHistory()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -28,6 +28,7 @@ const LoginArea = () => {
         } else {
             await dispatch(getCartData(response.user_ID));
             await dispatch(getWishlistData(response.user_ID));
+            await dispatch(getOrderData(response.user_ID));
             history.push("/shop");
         }
     };

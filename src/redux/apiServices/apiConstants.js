@@ -23,4 +23,8 @@ module.exports = {
     ADD_PRODUCT_INTO_WISHLIST: '/api/user/addProductIntoWishlist',
     REMOVE_PRODUCT_FROM_WISHLIST: '/api/user/removeProductFromWishlist',
     EMPTY_WISHLIST: '/api/user/emptyWishlist',
+
+    // ORDER
+    GET_ORDER_DATA: '/api/user/getOrderData',
+    ADD_PRODUCT_INTO_ORDER: '/api/user/addProductIntoOrder',
 };

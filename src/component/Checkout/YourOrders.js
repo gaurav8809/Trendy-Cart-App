@@ -46,7 +46,7 @@ const YourOrders = () => {
                                         <tr>
                                             <td>{item.name} <span className="product-qty">x {item.qty}</span>
                                             </td>
-                                            <td>${item.price}</td>
+                                            <td>${item.total}</td>
                                         </tr>
                                     );
                                 })
