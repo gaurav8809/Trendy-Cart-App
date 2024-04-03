@@ -23,7 +23,7 @@ const routeChange = () => {
                 <div className="col-lg-3">
                     <div className="account_thumd">
                         <div className="account_thumb_img">
-                            <img src={img1} alt="img" />
+                            <img style={{borderRadius: 300, height: 200, width: 200}} src={'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg'} alt="img" />
                             <div className="fixed_icon"><input type="file" /><i className="fa fa-camera"></i></div>
                         </div>
                         <h4>Robert Downey JR. </h4>
@@ -43,13 +43,13 @@ const routeChange = () => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="f_name">Name</label>
-                                <input type="text" className="form-control" id="f_name" placeholder="Jhon" required />
-                                <input type="text" className="form-control" placeholder="Dhoe" required />
+                                <input type="text" className="form-control" id="f_name" placeholder="X" required />
+                                <input type="text" className="form-control" placeholder="Rana" required />
                             </div>
                             <div className="form-group">
                                 <label  htmlFor="email_address">Email Address</label>
                                 <input type="email" className="form-control" id="email_address"
-                                    placeholder="our email address is demo123@gmail.com" required />
+                                    placeholder="x@gmail.com" required />
                             </div>
                             <div className="form-group">
                                 <label  htmlFor="current_password">Current Password</label>

@@ -191,6 +191,8 @@ const ProductDetailsOne = (props) => {
                                     </div>
                                     <h4>${product.price} <del>${parseInt(product.price) + 17}.00</del> </h4>
                                     <p>{product.description}</p>
+                                    <br/>
+                                    <span>Material: {product.material}</span>
                                     <div className="customs_selects">
                                         <select name="product" className="customs_sel_box" onChange={e => setSelectedSize(e.target.value)}>
                                             <option value="" disabled selected>Size</option>

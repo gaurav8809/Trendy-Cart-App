@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 // import {getProducts} from "./redux/actions/productActions";
 import {getProducts} from "./redux/slices/productSlice";
 import {BASE_URL, GET_PRODUCTS} from "./redux/apiServices/apiConstants";
-import {getCartData, getWishlistData} from "./redux/slices/userSlice";
+import {getCartData, getOrderData, getWishlistData} from "./redux/slices/userSlice";
 
 // All Page Lazy Import
 const Furniture = loadable(() => pMinDelay(import('./page/furniture'), 250), { fallback: <Loading /> });
@@ -85,6 +85,7 @@ const App = () => {
           if(user) {
             await dispatch(getCartData(user.user_ID));
             await dispatch(getWishlistData(user.user_ID));
+            await dispatch(getOrderData(user.user_ID));
           }
         });
   };
@@ -121,7 +122,7 @@ const App = () => {
             <Route path='/order-tracking' exact component={OrderTracking} />
             <Route path='/about' exact component={About} />
             <Route path='/product-hover' exact component={ProductHover} />
-            <Route path='/order-success' exact component={OrderSuccesses} />
+            <Route path='/order-success/:order_ID' exact component={OrderSuccesses} />
             <Route path='/email-template-one' exact component={EmailTemplateOnes} />
             <Route path='/email-template-two' exact component={EmailTemplateTwos} />
             <Route path='/email-template-three' exact component={EmailTemplateThrees} />

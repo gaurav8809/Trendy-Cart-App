@@ -3,9 +3,9 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import Swal from "sweetalert2";
 // import {getProducts} from "../actions/productActions";
 import {
-    ADD_PRODUCT_INTO_CART, ADD_PRODUCT_INTO_WISHLIST,
+    ADD_PRODUCT_INTO_CART, ADD_PRODUCT_INTO_ORDER, ADD_PRODUCT_INTO_WISHLIST,
     AUTHENTICATE,
-    BASE_URL, EMPTY_CART, EMPTY_WISHLIST, GET_CART_DATA, GET_WISHLIST_DATA,
+    BASE_URL, EMPTY_CART, EMPTY_WISHLIST, GET_CART_DATA, GET_ORDER_DATA, GET_WISHLIST_DATA,
     REGISTER,
     REMOVE_PRODUCT_FROM_CART, REMOVE_PRODUCT_FROM_WISHLIST, UPDATE_PRODUCT_INTO_CART
 } from "../apiServices/apiConstants";
@@ -68,6 +68,17 @@ export const emptyWishlist = createAsyncThunk('user/emptyWishlist', async (data)
     return response;
 });
 
+export const getOrderData = createAsyncThunk('user/getOrderData', async (data) => {
+    let response = await API(BASE_URL + GET_ORDER_DATA + `/${data}`);
+    return response;
+});
+
+export const addProductIntoOrder = createAsyncThunk('user/addProductIntoOrder', async (data) => {
+    let response = await API(BASE_URL + ADD_PRODUCT_INTO_ORDER, 'POST', data);
+    debugger
+    return response;
+});
+
 // Product Slice
 const userSlice = createSlice({
     name: 'user',
@@ -123,6 +134,15 @@ const userSlice = createSlice({
             })
             .addCase(emptyWishlist.fulfilled, (state, action) => {
                 state.wishlist = null;
+            })
+
+            // Order
+            .addCase(getOrderData.fulfilled, (state, action) => {
+                state.order = action.payload || null;
+            })
+            .addCase(addProductIntoOrder.fulfilled, (state, action) => {
+                debugger
+                state.order = action.payload || null;
             })
     }
 });

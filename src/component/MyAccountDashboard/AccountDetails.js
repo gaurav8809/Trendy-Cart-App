@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import img1 from '../../assets/img/team/team1.png'
+import {useSelector} from "react-redux";
 const AccountDetails = () => {
+    const user = useSelector((state) => state.user.user);
+
     return (
         <>
             <div className="myaccount-content">
@@ -13,7 +16,7 @@ const AccountDetails = () => {
                     <div className="account_details_form">
                         <form action="#">
                             <div className="img_profiles">
-                                <img src={img1} alt="img" />
+                                <img src={'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg'} alt="img" />
                             </div>
                             <div className="input-radio">
                                 <span className="custom-radio">
@@ -21,17 +24,17 @@ const AccountDetails = () => {
                             </div>
                             <div className="default-form-box mb-20">
                                 <label>First Name</label>
-                                <input type="text" name="first-name" className="form-control" defaultValue="Kazi"
+                                <input type="text" name="first-name" className="form-control" defaultValue={user.email.split('@')[0] || 'Guest'}
                                     readOnly />
                             </div>
                             <div className="default-form-box mb-20">
                                 <label>Last Name</label>
-                                <input type="text" name="last-name" className="form-control" defaultValue="Saiful"
+                                <input type="text" name="last-name" className="form-control" defaultValue="..."
                                     readOnly />
                             </div>
                             <div className="default-form-box mb-20">
                                 <label>Email</label>
-                                <input type="text" name="email-name" defaultValue="demo123@gmail.com"
+                                <input type="text" name="email-name" defaultValue={user.email}
                                     className="form-control" readOnly />
                             </div>
                             <div className="default-form-box mb-20">
