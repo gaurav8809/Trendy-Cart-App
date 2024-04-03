@@ -29,7 +29,7 @@ const Checkout = () => {
                 icon: 'success',
                 title: 'Order placed successfully',
             }).then(async () => {
-                history.push('/order-success')
+                history.push('/my-account/customer-order')
                 await dispatch(getCartData(user.user_ID));
             });
         }

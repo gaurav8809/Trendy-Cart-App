@@ -19,7 +19,7 @@ const handleCatchError = (url, err) => {
     return Promise.reject(err);
 };
 
-export function API(url, type = 'GET', data = {}, token = '', header = {}) {
+export function API(url, type = 'GET', data = {}, header = {}) {
     let reqHeader = Object.assign(header, {
         // Accept: 'application/json',
         // 'Content-Type': 'application/json',

@@ -14,9 +14,27 @@ import twitter from '../../assets/img/email/twitter.png'
 import gplus from '../../assets/img/email/gplus.png'
 import linkedin from '../../assets/img/email/linkedin.png'
 import pinterest from '../../assets/img/email/pinterest.png'
+import {useSelector} from "react-redux";
 
-const OrderSuccess = () => {
+const OrderSuccess = (props) => {
+
     const history = useHistory();
+    let productsData = useSelector((state) => state.products.products);
+    // let orderArray = useSelector((state) => state.user.order);
+    let {order: orderArray} = useSelector((state) => state.user);
+
+    let order = orderArray.find(i => i.order_ID === parseInt(props.order_ID));
+
+    let orderProducts = [];
+    console.log('ORDER: ', orderArray)
+
+    order.products.filter(item=> {
+        productsData.filter(item2 => {
+            if(item.product_ID === item2.product_ID) {
+                orderProducts.push({...item, ...item2, size: item.size, qty: item.qty, total: item.total});
+            }
+        })
+    });
     const routeChange = () => {
         history.push('/my-account/customer-order');
     };
@@ -37,7 +55,8 @@ const OrderSuccess = () => {
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <img src={img} alt="img" style={{ marginBottom: "30px" }} />
+                                                {/*<img src={img} alt="img" style={{ marginBottom: "30px" }} />*/}
+                                                <br/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -52,7 +71,7 @@ const OrderSuccess = () => {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <p>Payment Is Successfully Processsed And Your Order Is On The Way</p>
+                                                <p>Payment Is {order.status === 'Pending' ? 'Partially' : 'Successfully'} Processsed And Your Order Is On The Way</p>
                                                 <p>Transaction ID:267676GHERT105467</p>
                                             </td>
                                         </tr>
@@ -83,73 +102,61 @@ const OrderSuccess = () => {
                                             <th>QUANTITY</th>
                                             <th>PRICE</th>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <img src={pro1} alt="img" width="70" />
-                                            </td>
-                                            <td valign="top" style={{ paddingLeft: "15px" }}>
-                                                <h5 style={{ marginTop: "15px" }}>Three seater Wood Style sofa for Leavingroom </h5>
-                                            </td>
-                                            <td valign="top" style={{ paddingLeft: "15px" }}>
-                                                <h5 style={{ fontSize: "14px", color: "#444", marginTop: "15px", marginBottom: " 0px" }}>Size :
-                                                    <span> L</span> </h5>
-                                                <h5 style={{ fontSize: "14px", color: "#444", marginTop: "10px" }}>QTY : <span>1</span></h5>
-                                            </td>
-                                            <td valign="top" style={{ paddingLeft: "15px" }}>
-                                                <h5 style={{ fontSize: "14px", Color: "#444", marginTop: "15px" }}><b>$500</b></h5>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src={pro2} alt="img" width="70" />
-                                            </td>
-                                            <td valign="top" style={{ paddingLeft: "15px" }}>
-                                                <h5 style={{ marginTop: "15px" }}>Three seater Wood Style for Badroom </h5>
-                                            </td>
-                                            <td valign="top" style={{ paddingLeft: "15px" }}>
-                                                <h5 style={{ fontSize: "14px", color: "#444", marginTop: "15px", marginBottom: "0px" }}>Size :
-                                                    <span> XL</span> </h5>
-                                                <h5 style={{ fontSize: "14px", color: "#444", marginTop: "10px" }}>QTY : <span>1</span></h5>
-                                            </td>
-                                            <td valign="top" style={{ paddingLeft: "15px" }}>
-                                                <h5 style={{ fontSize: "14px", Color: "#444", marginTop: "15px" }}><b>$650</b></h5>
-                                            </td>
-                                        </tr>
+                                        {
+                                            orderProducts.map(item => (
+                                                <tr>
+                                                    <td>
+                                                        <img src={item.portfolioImage} alt="img" width="70" />
+                                                    </td>
+                                                    <td valign="top" style={{ paddingLeft: "15px" }}>
+                                                        <h5 style={{ marginTop: "15px" }}>{item.name} </h5>
+                                                    </td>
+                                                    <td valign="top" style={{ paddingLeft: "15px" }}>
+                                                        <h5 style={{ fontSize: "14px", color: "#444", marginTop: "15px", marginBottom: " 0px" }}>Size :
+                                                            <span> {item.size}</span> </h5>
+                                                        <h5 style={{ fontSize: "14px", color: "#444", marginTop: "10px" }}>QTY : <span>{item.qty}</span></h5>
+                                                    </td>
+                                                    <td valign="top" style={{ paddingLeft: "15px" }}>
+                                                        <h5 style={{ fontSize: "14px", Color: "#444", marginTop: "15px" }}><b>${item.total}</b></h5>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
                                         <tr>
                                             <td colSpan="2"
                                                 style={{ lineHeight: "49px", fontSize: "13px", color: "#000000", paddingLeft: "20px", textAlign: "left", borderRight: " unset" }}>
                                                 Products:</td>
                                             <td colSpan="3" className="price"
                                                 style={{ lineHeight: "49px", textAlign: "right", paddingRight: "28px", fontSize: "13px", color: "#000000", TextAlign: "right", borderLeft: "unset" }}>
-                                                <b>$1150</b></td>
+                                                <b>${order.subtotal}</b></td>
                                         </tr>
+                                        {/*<tr>*/}
+                                        {/*    <td colSpan="2"*/}
+                                        {/*        style={{ lineHeight: "49px", fontSize: "13px", color: "#000000", paddingLeft: "20px", textAlign: "left", borderRight: " unset" }}>*/}
+                                        {/*        Discount :</td>*/}
+                                        {/*    <td colSpan="3" className="price"*/}
+                                        {/*        style={{ lineHeight: "49px", textAlign: "right", paddingRight: "28px", fontSize: "13px", color: "#000000", TextAlign: "right", borderLeft: "unset" }}>*/}
+                                        {/*        <b>$10</b></td>*/}
+                                        {/*</tr>*/}
+                                        {/*<tr>*/}
+                                        {/*    <td colSpan="2"*/}
+                                        {/*        style={{ lineHeight: "49px", fontFamily: " Arial", fontSize: "13px", color: "#000000", paddingLeft: "20px", textAlign: "left", borderRight: "unset" }}>*/}
+                                        {/*        Gift Wripping: </td>*/}
+                                        {/*    <td colSpan="3" className="price"*/}
+                                        {/*        style={{ lineHeight: "49px", textAlign: "right", paddingRight: "28px", fontSize: "13px", color: "#000000", TextAlign: "right", borderLeft: "unset" }}>*/}
+                                        {/*        <b>$1140</b></td>*/}
+                                        {/*</tr>*/}
                                         <tr>
-                                            <td colSpan="2"
-                                                style={{ lineHeight: "49px", fontSize: "13px", color: "#000000", paddingLeft: "20px", textAlign: "left", borderRight: " unset" }}>
-                                                Discount :</td>
-                                            <td colSpan="3" className="price"
-                                                style={{ lineHeight: "49px", textAlign: "right", paddingRight: "28px", fontSize: "13px", color: "#000000", TextAlign: "right", borderLeft: "unset" }}>
-                                                <b>$10</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan="2"
-                                                style={{ lineHeight: "49px", fontFamily: " Arial", fontSize: "13px", color: "#000000", paddingLeft: "20px", textAlign: "left", borderRight: "unset" }}>
-                                                Gift Wripping: </td>
-                                            <td colSpan="3" className="price"
-                                                style={{ lineHeight: "49px", textAlign: "right", paddingRight: "28px", fontSize: "13px", color: "#000000", TextAlign: "right", borderLeft: "unset" }}>
-                                                <b>$1140</b></td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan="2" style={{ lineHeight: "49px", fontSize: "13px", color: "#000000", paddingLeft: "20px", textAlign: "left", borderRight: "unset" }}>Shipping :</td>
+                                            <td colSpan="2" style={{ lineHeight: "49px", fontSize: "13px", color: "#000000", paddingLeft: "20px", textAlign: "left", borderRight: "unset" }}>Sales Tax :</td>
                                             <td colSpan="3" className="price"
                                                 style={{ lineHeight: "49px", textAlign: "right", paddingRight: "28px", fontSize: "13px", color: "#000000", TtextAlign: "right", borderLeft: " unset" }}>
-                                                <b>$30</b></td>
+                                                <b>${order.salesTax}</b></td>
                                         </tr>
                                         <tr>
-                                            <td colSpan="2" style={{ lineHeight: "49px", fontSize: "13px", color: "#000000", paddingLeft: "20px", textAlign: "left", borderRight: "unset" }}>TOTAL PAID :</td>
+                                            <td colSpan="2" style={{ lineHeight: "49px", fontSize: "13px", color: "#000000", paddingLeft: "20px", textAlign: "left", borderRight: "unset" }}>{order.status === 'Pending' ? 'TO PAY' : 'TOTAL PAID'} :</td>
                                             <td colSpan="3" className="price"
                                                 style={{ lineHeight: "49px", textAlign: "right", paddingRight: "28px", fontSize: "13px", color: "#000000", TextAlign: "right", borderLeft: "unset" }}>
-                                                <b>$1170</b></td>
+                                                <b>${order.total}</b></td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -2,20 +2,22 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../../../assets/img/logo.png'
 import logoWhite from '../../../assets/img/logo-white.png'
-import { MenuData } from './MenuData'
-import NaveItems from './NaveItems'
 import TopHeader from './TopHeader'
 import { useHistory } from "react-router-dom"
 import svg from '../../../assets/img/svg/cancel.svg'
 import svgsearch from '../../../assets/img/svg/search.svg'
-
 import { useDispatch, useSelector } from "react-redux";
 import Swal from 'sweetalert2'
 import {removeProductFromCart, removeProductFromWishlist} from "../../../redux/slices/userSlice";
+import colors from "../../../theme/colors";
+import ObjectDetection from "../../../page/objectDetection";
+import _ from 'lodash';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
 
 const Header = () => {
     const [click, setClick] = useState(false);
     const [show, setShow] = useState();
+    const [objectDetectionView, setObjectDetectionView] = useState(false);
     const [categories, setCategories] = useState([
         {
             name: 'Men',
@@ -90,10 +92,22 @@ const Header = () => {
             ],
         },
     ]);
+    const [items, setItems] = useState([]);
+    const [searchQuery, setsearchQuery] = useState('');
     const history = useHistory()
     const {cart, wishlist: favorites} = useSelector((state) => state.user);
     const productsData = useSelector((state) => state.products.products);
+    const [recognizer, setRecognizer] = useState();
+    const {
+        transcript,
+        listening,
+        resetTranscript,
+        browserSupportsSpeechRecognition
+    } = useSpeechRecognition();
 
+    useEffect(() => {
+        setsearchQuery(transcript)
+    }, [transcript]);
 
     let cartProducts = [];
     let favProducts = [];
@@ -244,6 +258,15 @@ const Header = () => {
     const onPressCategory = (item) => {
         console.log(item);
     };
+
+    const addItemInList = (item) => {
+        if(!_.includes(items, {class: item.class}))
+        {
+            let temp_items = _.cloneDeep(items);
+            temp_items.push(item);
+            setItems(temp_items);
+        }
+    }
 
     return (
         <>
@@ -673,14 +696,90 @@ const Header = () => {
             </div>
 
             <div id="search" className="search-modal">
-                <button type="button" className="close" onClick={handleSearch}><img src={svg} alt="icon" /></button>
-                <form onSubmit={(e) => { e.preventDefault(); handleSearch(); Swal.fire('Success', 'Check out the Results', 'success'); history.push('/shop') }}>
-                    <input type="search" placeholder="type keyword(s) here" required />
-                    <button type="submit" className="btn btn-lg btn-main-search">Search</button>
-                </form>
+                {
+                    objectDetectionView ?
+                    <div>
+                        <button type="button" className="close" onClick={() => setObjectDetectionView(!objectDetectionView)}><img src={svg} alt="icon" /></button>
+                        <ObjectDetection addItemInList={addItemInList} />
+
+                        {
+                            <div style={{ position: 'fixed', top: 90, right: 220}}>
+                                {
+                                    items.map((i, index) => {
+                                        return(
+                                            <button style={style.itemContainer} onClick={() => {
+                                                setsearchQuery(i.class);
+                                                setObjectDetectionView(!objectDetectionView);
+                                            }}>
+                                                <div style={style.item}>
+                                                    {i.class}
+                                                </div>
+                                            </button>
+                                        );
+                                    })
+                                }
+                            </div>
+                        }
+                    </div>
+                        :
+                    <div>
+                        <button type="button" className="close" onClick={handleSearch}><img src={svg} alt="icon" /></button>
+                        <form style={{display: 'contents'}} onSubmit={(e) => { e.preventDefault(); handleSearch(); Swal.fire('Success', 'Check out the Results', 'success'); history.push('/shop') }}>
+                            <input
+                                onclose={() => setsearchQuery('')}
+                                value={searchQuery} type="search"
+                                placeholder="type keyword(s) here"
+                                required
+                                style={{width: 290, marginRight: 10}}
+                                onChange={e => setsearchQuery(e.target.value)}
+                            />
+                            <button type="submit" className="btn btn-lg btn-main-search">Search</button>
+                        </form>
+                        <div style={{display: 'flex', width: 400, justifyContent: 'space-around'}}>
+                            <button style={style.cameraDiv} onClick={() => setObjectDetectionView(!objectDetectionView)}>
+                                <i className="fa fa-camera" style={{color: colors.primary, fontSize: 30}}></i>
+                            </button>
+                            <div style={style.cameraDiv} onClick={() => SpeechRecognition.startListening()}>
+                                <button style={{backgroundColor: 'transparent'}}  onClick={() => SpeechRecognition.startListening()}>
+                                    <i className="fa fa-microphone" style={{color: colors.primary, fontSize: 30}}></i>
+                                </button>
+                            </div>
+                        </div>
+                        {/*<button style={style.cameraDiv} onClick={() => setObjectDetectionView(!objectDetectionView)}>*/}
+                        {/*    <i className="fa fa-camera" style={{color: colors.primary, fontSize: 30}}></i>*/}
+                        {/*</button>*/}
+                        {/*<button style={style.cameraDiv} onClick={() => setObjectDetectionView(!objectDetectionView)}>*/}
+                        {/*    <i className="fa fa-camera" style={{color: colors.primary, fontSize: 30}}></i>*/}
+                        {/*</button>*/}
+                    </div>
+                }
             </div>
         </>
     )
+}
+
+const style = {
+    cameraDiv: {
+        padding: 30,
+        border: `1px solid ${colors.primary}`,
+        borderRadius: '200%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginTop: 50,
+        backgroundColor: 'transparent'
+    },
+    itemContainer: {
+        alignItems: 'center',
+        marginTop: 10,
+        padding: 10,
+        backgroundColor: 'white',
+        borderRadius: 5,
+    },
+    item: {
+        color: 'black',
+        fontSize: 15,
+    }
 }
 
 export default Header

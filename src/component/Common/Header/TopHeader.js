@@ -39,9 +39,9 @@ const TopHeader = () => {
                                         :
                                         <ul className="right_list_fix">
                                             {/*<li><Link to="/order-tracking"><i className="fa fa-truck"></i> Track your Order</Link></li>*/}
-                                            <li className="after_login"><img src={avater} alt="avater" /> {user.firstname || 'Guest'} <i className="fa fa-angle-down"></i>
+                                            <li className="after_login"><img src={'https://media.sproutsocial.com/uploads/2022/06/profile-picture.jpeg'} alt="avater" /> {user.email.split('@')[0] || 'Guest'} <i className="fa fa-angle-down"></i>
                                                 <ul className="custom_dropdown">
-                                                    <li><Link to="/my-account"><i className="fa fa-tachometer"></i> Dashboard</Link></li>
+                                                    {/*<li><Link to="/my-account"><i className="fa fa-tachometer"></i> Dashboard</Link></li>*/}
                                                     <li><Link to="/my-account/customer-order"><i className="fa fa-cubes"></i> My Orders</Link></li>
                                                     <li><Link to="" onClick={() => { logout() }} ><i className="fa fa-sign-out"></i> Logout</Link></li>
                                                 </ul>

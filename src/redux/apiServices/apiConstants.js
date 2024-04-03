@@ -1,6 +1,6 @@
 module.exports = {
-    // BASE_URL: 'https://trendy-cart-app.azurewebsites.net',
-    BASE_URL: 'http://localhost:7071',
+    BASE_URL: 'https://trendy-cart-app.azurewebsites.net',
+    // BASE_URL: 'http://localhost:7071',
 
     // PRODUCTS
     GET_PRODUCTS: '/api/product/getProducts',

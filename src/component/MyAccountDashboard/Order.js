@@ -38,7 +38,8 @@ const Order = () => {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {order?.map((data, index) => (
+                                {order?.map((data, index) => {
+                                    return (
                                     <tr>
                                         <td>{index + 1}</td>
                                         <td>{data.updated_at.split('T')[0].split('-')[1] + '-' +
@@ -47,9 +48,11 @@ const Order = () => {
                                         </td>
                                         <td><span className="badge badge-info">{data.status}</span></td>
                                         <td>${data.total} for {data.products.length} item </td>
-                                        <td><Link to="/order-success" className="view">view</Link></td>
+                                        <td><Link to={`/order-success/${data.order_ID}`} className="view">view</Link></td>
                                     </tr>
-                                ))}
+                                    )
+                                })
+                                }
                                 </tbody>
                             </table>
                             :

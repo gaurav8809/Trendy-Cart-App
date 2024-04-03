@@ -5,16 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb230ad2-eb94-4650-9b4d-fb8a308f4a8c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/page/objectDetection/App.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/page/objectDetection/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/page/objectDetection/utilities.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/theme/colors.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Checkout/YourOrders.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Checkout/YourOrders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/Checkout/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Checkout/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Common/ProductDetails/ProductDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/ProductDetails/ProductDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/component/Login/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Login/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Common/Header/TopHeader.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/Header/TopHeader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/Common/Header/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/Common/Header/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/ContactOne/Map.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/ContactOne/Map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/MyAccountDashboard/AccountDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/MyAccountDashboard/AccountDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/MyAccountDashboard/AccountDetailsEdit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/MyAccountDashboard/AccountDetailsEdit.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/MyAccountDashboard/Order.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/MyAccountDashboard/Order.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/component/MyAccountDashboard/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/MyAccountDashboard/Sidebar.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/component/OrderSuccess/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/component/OrderSuccess/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/page/order/order-success.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/page/order/order-success.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/apiServices/apiCall.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/apiServices/apiCall.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/redux/apiServices/apiConstants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/apiServices/apiConstants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/redux/slices/userSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/userSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +59,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/GauravRana/React/andshop/src/redux/store&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/GauravRana/React/andshop/src/page/objectDetection&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -63,6 +74,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\GauravRana\React\andshop\src\page\objectDetection" />
+      <recent name="C:\GauravRana\React\andshop\src\page\ojectDetection" />
       <recent name="C:\GauravRana\React\andshop\src\redux\store" />
       <recent name="C:\GauravRana\React\andshop\src\redux\slices" />
     </key>
@@ -127,7 +140,16 @@
       <workItem from="1701578661550" duration="63000000" />
       <workItem from="1701885040202" duration="1144000" />
       <workItem from="1701984002508" duration="31459000" />
-      <workItem from="1702144519353" duration="7859000" />
+      <workItem from="1702144519353" duration="8004000" />
+      <workItem from="1702510110519" duration="8008000" />
+      <workItem from="1705360692315" duration="613000" />
+      <workItem from="1707258884625" duration="16000" />
+      <workItem from="1709261571856" duration="879000" />
+      <workItem from="1709318374045" duration="21912000" />
+      <workItem from="1709826439780" duration="1757000" />
+      <workItem from="1711574281234" duration="13327000" />
+      <workItem from="1711736966637" duration="2969000" />
+      <workItem from="1712156700064" duration="5445000" />
     </task>
     <servers />
   </component>

@@ -122,7 +122,7 @@ const App = () => {
             <Route path='/order-tracking' exact component={OrderTracking} />
             <Route path='/about' exact component={About} />
             <Route path='/product-hover' exact component={ProductHover} />
-            <Route path='/order-success' exact component={OrderSuccesses} />
+            <Route path='/order-success/:order_ID' exact component={OrderSuccesses} />
             <Route path='/email-template-one' exact component={EmailTemplateOnes} />
             <Route path='/email-template-two' exact component={EmailTemplateTwos} />
             <Route path='/email-template-three' exact component={EmailTemplateThrees} />
