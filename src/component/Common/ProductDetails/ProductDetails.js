@@ -17,6 +17,9 @@ import {
 import {InCart, InWishlist} from "../../../handlers/appHandler";
 import {AiOutlineHeart} from "react-icons/ai";
 import _ from 'lodash';
+import MyVerticallyCenteredModal from "../Modal";
+import MyVerticallyCenteredCustomModal from "../Modal/CustomModal";
+import VirtualTryOn from "../../../page/virtualTryOn";
 
 const ProductDetailsOne = (props) => {
 
@@ -24,6 +27,7 @@ const ProductDetailsOne = (props) => {
     // searchParams.get("__firebase_request_key")
     let dispatch = useDispatch();
     let history = useHistory();
+    const [virtualTryOnModal, setVirtualTryOnModal] = useState(false);
 
     dispatch(getProductById(product_ID));
     const productsReducer = useSelector(state => state.products);
@@ -248,6 +252,10 @@ const ProductDetailsOne = (props) => {
                                                 <a className="action compare" onClick={onClickCompare} title="Compare"><i
                                                     className="fa fa-exchange"></i>Add To Compare</a>
                                             </li>
+                                            <li>
+                                                <a className="action compare" onClick={() => setVirtualTryOnModal(true)} title="Compare"><i
+                                                    className="fa fa-camera"></i>Virtual try on</a>
+                                            </li>
                                         </ul>
                                         {
                                             <a className="theme-btn-one btn-black-overlay btn_sm" onClick={onClickAddToCart}>{
@@ -279,6 +287,9 @@ const ProductDetailsOne = (props) => {
         }
 
             <RelatedProduct />
+            <MyVerticallyCenteredCustomModal data={props.data} show={virtualTryOnModal} onHide={() => setVirtualTryOnModal(false)}>
+                <VirtualTryOn data={img} />
+            </MyVerticallyCenteredCustomModal>
         </>
     )
 }
