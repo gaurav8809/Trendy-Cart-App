@@ -184,7 +184,7 @@ const ProductDetailsOne = (props) => {
                         <div className="col-lg-8">
                             <div className="product_details_right_one">
                                 <div className="modal_product_content_one">
-                                    <h3>{product.title}</h3>
+                                    <h3>{product.name}</h3>
                                     <div className="reviews_rating">
                                         <RatingStar maxScore={5} rating={product.price} id="rating-star-common" />
                                         <span>({3} Customer Reviews)</span>
@@ -193,14 +193,17 @@ const ProductDetailsOne = (props) => {
                                     <p>{product.description}</p>
                                     <br/>
                                     <span>Material: {product.material}</span>
-                                    <div className="customs_selects">
-                                        <select name="product" className="customs_sel_box" onChange={e => setSelectedSize(e.target.value)}>
-                                            <option value="" disabled selected>Size</option>
-                                            {
-                                                product.size?.map((item) => <option selected={item === selectedSize} key={item} value={item}>{item}</option>)
-                                            }
-                                        </select>
-                                    </div>
+                                    {
+                                        !product.size.includes('N/A') &&
+                                        <div className="customs_selects">
+                                            <select name="product" className="customs_sel_box" onChange={e => setSelectedSize(e.target.value)}>
+                                                <option value="" disabled selected>Size</option>
+                                                {
+                                                    product.size?.map((item) => <option selected={item === selectedSize} key={item} value={item}>{item}</option>)
+                                                }
+                                            </select>
+                                        </div>
+                                    }
                                     {/*<div className="variable-single-item">*/}
                                     {/*    <span>Color</span>*/}
                                     {/*    <div className="product-variable-color">*/}

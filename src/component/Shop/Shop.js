@@ -4,15 +4,33 @@ import Filter from './Filter'
 import {useDispatch, useSelector} from "react-redux";
 import Loading from '../../component/Common/loader';
 import {getProducts} from "../../redux/slices/productSlice";
+import NO_PRODUCT from "../../assets/img/common/no-product.png";
+import {Link} from "react-router-dom";
 
 const Shop = () => {
 
     let dispatch = useDispatch();
-    const {products} = useSelector((state) => state.products);
+    const {products: appProducts} = useSelector((state) => state.products);
+    const {appSearchQuery} = useSelector((state) => state.settings);
+    const [products, setProducts] = useState(appProducts);
 
     useEffect(() => {
         products.length === 0 && getAllRequiredData();
     }, []);
+
+    useEffect(() => {
+        if(appSearchQuery) {
+            let temp = [];
+            products.filter(item => {
+                if(item.name.toLowerCase().includes(appSearchQuery.toLowerCase()) || item.description.toLowerCase().includes(appSearchQuery.toLowerCase()) || item.color.toLowerCase().includes(appSearchQuery.toLowerCase())) {
+                    temp.push(item);
+                }
+            })
+            setProducts(temp);
+        } else {
+            setProducts(appProducts);
+        }
+    },[appSearchQuery]);
 
     const getAllRequiredData = async () => {
         await dispatch(getProducts());
@@ -45,7 +63,20 @@ const Shop = () => {
                                 </div>
                             )})
                                 :
-                                <Loading />
+                                appSearchQuery ?
+                                    <div className="container ptb-100">
+                                        <div className="row">
+                                            <div className="col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-12 col-12">
+                                                <div className="empaty_cart_area">
+                                                    <img src={NO_PRODUCT} alt="img" style={{height: 200, width: 300}} />
+                                                    <h2>PRODUCT NOT FOUND</h2>
+                                                    <h3>Sorry Mate... No Item Found according to Your query!</h3>
+                                                    <Link onClick={() => dispatch({ type: "settings/setAppSearchQuery", payload: null })} className="btn btn-black-overlay btn_sm">Continue Shopping</Link>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    : <Loading />
                         }
                         {/*<div className="col-lg-12">*/}
                         {/*    <ul className="pagination">*/}

@@ -27,21 +27,21 @@ const ShopList = () => {
                             <ListCard data={data} key={index}/>
                         ))}
                         <div className="col-lg-12">
-                        <ul className="pagination">
-                                        <li className="page-item" onClick={(e) => { randProduct(page >1?page-1:0) }}>
-                                            <a className="page-link" href="#!" aria-label="Previous">
-                                                <span aria-hidden="true">«</span>
-                                            </a>
-                                        </li>
-                                        <li className={"page-item "+ (page === 1?"active":null)} onClick={(e) => { randProduct(1) }}><a className="page-link" href="#!">1</a></li>
-                                        <li className={"page-item "+ (page === 2?"active":null)}  onClick={(e) => { randProduct(2) }}><a className="page-link" href="#!">2</a></li>
-                                        <li className={"page-item "+ (page === 3?"active":null)}  onClick={(e) => { randProduct(3) }}><a className="page-link" href="#!">3</a></li>
-                                        <li className="page-item" onClick={(e) => { randProduct(page <3?page+1:0) }}>
-                                            <a className="page-link" href="#!" aria-label="Next">
-                                                <span aria-hidden="true">»</span>
-                                            </a>
-                                        </li>
-                                    </ul>
+                            <ul className="pagination">
+                                <li className="page-item" onClick={(e) => { randProduct(page >1?page-1:0) }}>
+                                    <a className="page-link" href="#!" aria-label="Previous">
+                                        <span aria-hidden="true">«</span>
+                                    </a>
+                                </li>
+                                <li className={"page-item "+ (page === 1?"active":null)} onClick={(e) => { randProduct(1) }}><a className="page-link" href="#!">1</a></li>
+                                <li className={"page-item "+ (page === 2?"active":null)}  onClick={(e) => { randProduct(2) }}><a className="page-link" href="#!">2</a></li>
+                                <li className={"page-item "+ (page === 3?"active":null)}  onClick={(e) => { randProduct(3) }}><a className="page-link" href="#!">3</a></li>
+                                <li className="page-item" onClick={(e) => { randProduct(page <3?page+1:0) }}>
+                                    <a className="page-link" href="#!" aria-label="Next">
+                                        <span aria-hidden="true">»</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

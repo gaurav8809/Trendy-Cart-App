@@ -82,6 +82,7 @@ const App = () => {
   const getAllRequiredData = async () => {
     await dispatch(getProducts())
         .then(async () => {
+          dispatch({ type: "settings/setAppSearchQuery", payload: null })
           if(user) {
             await dispatch(getCartData(user.user_ID));
             await dispatch(getWishlistData(user.user_ID));

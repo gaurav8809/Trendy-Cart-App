@@ -9,6 +9,7 @@ const settingsSlice = createSlice({
         promoCenter: false,
         promoStatus:false,
         stopPromo:false,
+        appSearchQuery: null,
     },
     reducers: {
         // Promo Center Modal Stop
@@ -30,6 +31,9 @@ const settingsSlice = createSlice({
         // Cookie Show / hide
         cookie: (state) => {
             state.cookie = !state.cookie
+        },
+        setAppSearchQuery: (state, action) => {
+            state.appSearchQuery = action.payload
         },
     }
 })

@@ -8,7 +8,7 @@ import svg from '../../../assets/img/svg/cancel.svg'
 import svgsearch from '../../../assets/img/svg/search.svg'
 import { useDispatch, useSelector } from "react-redux";
 import Swal from 'sweetalert2'
-import {removeProductFromCart, removeProductFromWishlist} from "../../../redux/slices/userSlice";
+import {getOrderData, removeProductFromCart, removeProductFromWishlist} from "../../../redux/slices/userSlice";
 import colors from "../../../theme/colors";
 import ObjectDetection from "../../../page/objectDetection";
 import _ from 'lodash';
@@ -93,10 +93,11 @@ const Header = () => {
         },
     ]);
     const [items, setItems] = useState([]);
-    const [searchQuery, setsearchQuery] = useState('');
     const history = useHistory()
     const {cart, wishlist: favorites} = useSelector((state) => state.user);
     const productsData = useSelector((state) => state.products.products);
+    const {appSearchQuery} = useSelector((state) => state.settings);
+    const [searchQuery, setsearchQuery] = useState(appSearchQuery);
     const [recognizer, setRecognizer] = useState();
     const {
         transcript,
@@ -266,6 +267,14 @@ const Header = () => {
             temp_items.push(item);
             setItems(temp_items);
         }
+    }
+
+    const onClickSearch = (e) => {
+        console.log('COMES HERE')
+        e.preventDefault();
+        handleSearch();
+        dispatch({ type: "settings/setAppSearchQuery", payload: searchQuery })
+        history.push('/shop')
     }
 
     return (
@@ -724,7 +733,8 @@ const Header = () => {
                         :
                     <div>
                         <button type="button" className="close" onClick={handleSearch}><img src={svg} alt="icon" /></button>
-                        <form style={{display: 'contents'}} onSubmit={(e) => { e.preventDefault(); handleSearch(); Swal.fire('Success', 'Check out the Results', 'success'); history.push('/shop') }}>
+                        {/*<form style={{display: 'contents'}} onSubmit={(e) => { e.preventDefault(); handleSearch(); Swal.fire('Success', 'Check out the Results', 'success'); history.push('/shop') }}>*/}
+                        <form style={{display: 'contents'}} onSubmit={e => onClickSearch(e)}>
                             <input
                                 onclose={() => setsearchQuery('')}
                                 value={searchQuery} type="search"
